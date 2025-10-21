@@ -3,55 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Kolten's Site</title>
+    <title>Kolten's Blog</title>
     <style>
-        /* This is CSS, which adds style! */
+        /* A more modern, Apple-inspired blog style */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            background-color: #f0f2f5; /* A light gray background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding: 0;
+            background-color: #ffffff; /* Clean white background */
+            color: #1d1d1f; /* Apple's standard dark text color */
+            -webkit-font-smoothing: antialiased; /* Makes text look smoother */
         }
-        .container {
-            text-align: center;
-            background-color: #ffffff; /* White card */
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            max-width: 600px;
+
+        /* The main content area */
+        .content-wrapper {
+            max-width: 680px; /* Standard width for a blog post */
+            margin: 0 auto; /* Centers the content */
+            padding: 60px 20px; /* Spacing from top/bottom and sides */
         }
-        h1 {
-            color: #1c1e21; /* A dark color for the heading */
+
+        header {
+            border-bottom: 1px solid #d2d2d7; /* A subtle separator line */
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
             font-size: 2.5em;
-            margin-bottom: 10px;
+            font-weight: 600;
+            margin: 0;
         }
-        p {
-            color: #606770; /* A softer gray for the text */
-            font-size: 1.2em;
-            line-height: 1.6;
+
+        article h2 {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
-        .my-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 24px;
-            background-color: #007bff; /* A nice blue */
-            color: #ffffff;
+
+        article p {
+            font-size: 1.1em;
+            line-height: 1.7; /* Very important for readability */
+            color: #333; /* Slightly softer than pure black */
+            margin-bottom: 25px;
+        }
+
+        article a {
+            color: #007aff; /* Apple's link blue */
             text-decoration: none;
-            font-weight: bold;
-            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        article a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: 50px;
+            border-top: 1px solid #d2d2d7;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #86868b; /* A light gray for footer text */
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Welcome!</h1>
-        <p>This is my first website, coded from scratch and hosted for free on GitHub Pages. Pretty cool!</p>
-        
-        <a href="#" class="my-link">This is a link</a>
+    <div class="content-wrapper">
+        <header>
+            <h1>Kolten's Blog</h1>
+        </header>
+
+        <main>
+            <article>
+                <h2>My First Post</h2>
+                <p>
+                    This is the start of my new blog. I'm building this website from scratch 
+                    to learn how HTML and CSS work. It's hosted for free on GitHub Pages,
+                    which is a fantastic tool for developers.
+                </p>
+                <p>
+                    The design is inspired by the clean, minimalist aesthetic seen on sites like 
+                    Apple's. The focus is on typography and white space to make the content 
+                    easy and enjoyable to read.
+                </p>
+                <p>
+                    You can follow my journey on <a href="https://github.com/koltensaccount">my GitHub profile</a>.
+                </p>
+            </article>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Kolten. All rights reserved.</p>
+        </footer>
     </div>
 
 </body>
