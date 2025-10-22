@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kolten's Website</title>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
-        /* Modern, Apple-inspired style */
+        /* Modern, Apple-inspired blog style */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #ffffff; /* Clean white background */
-            color: #1d1d1f; /* Apple's standard dark text color */
+            background-color: #ffffff; /* Seamless white background */
+            color: #1d1d1f;
             -webkit-font-smoothing: antialiased;
         }
 
         /* The main content area */
         .content-wrapper {
-            max-width: 800px; /* Standard width for a blog/portfolio */
+            max-width: 800px; /* A good width for academic work */
             margin: 0 auto; /* Centers the content */
-            padding: 60px 20px; /* Spacing from top/bottom and sides */
+            padding: 60px 20px;
         }
 
         header {
@@ -33,56 +37,42 @@
             font-weight: 600;
             margin: 0;
         }
-
-        /* Style for a section title, like "Homework" */
+        
         h2 {
             font-size: 2em;
             font-weight: 600;
             margin-bottom: 20px;
         }
-        
-        p.intro {
+
+        p {
             font-size: 1.1em;
-            line-height: 1.7; /* Very important for readability */
+            line-height: 1.7;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         /* This styles the dropdown */
         details {
-            background-color: #f9f9f9; /* A very light gray box */
-            border-radius: 12px;
             margin-bottom: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            overflow: hidden; /* This keeps the rounded corners */
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        /* This styles the clickable "Homework 5" part */
+        /* This styles the clickable "Homework 1" part */
         summary {
-            font-size: 1.3em;
+            font-size: 1.4em;
             font-weight: 500;
-            padding: 20px 25px;
+            padding: 20px 10px;
             cursor: pointer;
             list-style: none; /* Removes the default triangle */
         }
         
         summary:hover {
-            background-color: #f0f0f0;
+            background-color: #f9f9f9;
         }
 
         /* This is the content *inside* the dropdown */
         .homework-content {
-            padding: 0px 25px 25px 25px;
-            border-top: 1px solid #e8e8ed;
-        }
-
-        /* This styles the embedded PDF "window" */
-        .pdf-embed {
-            width: 100%;
-            height: 800px; /* You can change this height! */
-            border: none; /* Remove the border, it's inside the box now */
-            border-radius: 6px;
-            margin-top: 20px;
+            padding: 0px 10px 25px 10px;
         }
         
         footer {
@@ -91,7 +81,7 @@
             padding-top: 20px;
             text-align: center;
             font-size: 0.9em;
-            color: #86868b; /* A light gray for footer text */
+            color: #86868b;
         }
     </style>
 </head>
@@ -103,7 +93,7 @@
         </header>
 
         <main>
-            <p class="intro">
+            <p>
                 Welcome to my personal site. I'm building this from scratch to learn
                 how web development works. Below is a collection of my
                 coursework.
@@ -114,20 +104,30 @@
             <details>
                 <summary>Homework 5</summary>
                 <div class="homework-content">
-                    <iframe 
-                        src="hw5.pdf" 
-                        class="pdf-embed"
-                        title="Homework 5 PDF Viewer">
-                    </iframe>
+                    <p>
+                        This is where you would paste your raw LaTeX code from Overleaf.
+                        For example, if you paste in:
+                    </p>
+                    <p>
+                        <code>
+                        $$ A = \begin{bmatrix} 2 & 1 \\ 3 & 2 \end{bmatrix} $$
+                        </code>
+                    </p>
+                    <p>
+                        ...the MathJax script will automatically render it to look like this:
+                    </p>
+                    
+                    $$
+                    A = \begin{bmatrix} 2 & 1 \\ 3 & 2 \end{bmatrix}
+                    $$
+
                 </div>
             </details>
 
             <details>
                 <summary>Homework 4</summary>
                 <div class="homework-content">
-                    <p>
-                        (This is where you would put <b>hw4.pdf</b>)
-                    </p>
+                    <p>This homework is not posted yet.</p>
                 </div>
             </details>
         </main>
