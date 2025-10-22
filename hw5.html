@@ -3,515 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HW 5 - Kolten's Site</title>
-    
-    <script>
-      window.MathJax = {
-        tex: {
-          packages: {'[+]': ['amsmath', 'cancel']}, // This is the fix!
-          macros: {
-            mat: ['\\begin{bmatrix} #1 \\end{bmatrix}', 1],
-            vect: ['\\mathbf{#1}', 1]
-          }
-        }
-      };
-    </script>
+    <title>Kolten's Homework</title>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
+
     <style>
+        /* Modern Academic Style (Seamless) */
         body {
-            /* Use a serif font for that academic paper look */
-            font-family: Georgia, 'Times New Roman', Times, serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f7;
+            background-color: #ffffff; /* Seamless white background */
             color: #1d1d1f;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Navigation Bar (Keep the modern web style) --- */
-        nav {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
-            border-bottom: 1px solid #d2d2d7;
-            padding: 0 40px;
-        }
-        nav ul {list-style: none; margin: 0; padding: 0; display: flex;}
-        nav ul li {position: relative;}
-        nav ul li a {display: block; padding: 20px; color: #1d1d1f; text-decoration: none; font-weight: 500;}
-        nav ul li a:hover {background-color: #f5f5f7;}
-        nav ul ul {display: none; position: absolute; background-color: #ffffff; border: 1px solid #d2d2d7; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); min-width: 200px;}
-        nav ul li:hover > ul {display: block;}
-        nav ul ul li {width: 100%;}
-        
-        /* --- Main Content Area (Academic Style) --- */
-        .content-wrapper {
-            max-width: 700px; /* Standard paper width */
-            margin: 0 auto;
-            padding: 50px 20px;
-            background-color: #ffffff; /* White "paper" background */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-top: 30px;
-            margin-bottom: 50px;
-            border-radius: 8px;
+        /* This is now the main container */
+        main {
+            max-width: 800px; /* A good width for academic work */
+            margin: 0 auto;   /* This centers it on the page */
+            padding: 50px 20px; /* Spacing from top/bottom and sides */
         }
 
-        .content-wrapper h1 {
+        h1 {
             font-size: 2.5em;
             font-weight: 600;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .content-wrapper h2 {
-            font-size: 1.8em;
-            font-weight: 600;
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 10px;
-            margin-top: 40px;
-        }
-        
-        /* This styles the problem block */
-        .problem {
-            margin-left: 2em; /* Mimics the \adjustwidth from your preamble[71] */
-            font-size: 1.1em;
-            line-height: 1.7;
-        }
-        .problem h3 {
-            font-weight: bold;
-            font-size: 1.2em;
-            color: #000;
-            margin-bottom: 15px;
-        }
-        .problem p {
-            margin-left: 0;
-        }
-        
-        /* This style EXACTLY mimics your 'solutionbox' preamble[72] */
-        .solution {
-            background-color: #fdfdfd; /* Off-white */
-            border: 1px solid #f0f0f0;
-            /* This is the gray bar from your preamble! [72] */
-            border-left: 2pt solid #999999; /* gray!60 */
-            padding: 1px 20px;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-        .solution p {
-            font-size: 1.1em;
-            line-height: 1.7;
-        }
-        .solution b {
-            font-weight: bold;
+            margin-bottom: 40px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 15px;
         }
 
+        /* This styles the dropdown */
+        details {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* This styles the clickable "Homework 1" part */
+        summary {
+            font-size: 1.4em;
+            font-weight: 500;
+            padding: 20px 10px;
+            cursor: pointer;
+            list-style: none; /* Removes the default triangle */
+        }
+        
+        summary:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* This is the content *inside* the dropdown */
+        .homework-content {
+            padding: 0px 10px 25px 10px;
+            line-height: 1.7;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .homework-content p {
+            margin-bottom: 20px;
+        }
+
+        /* Code/Math blocks */
+        pre {
+            background-color: #f7f7f7;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li>
-                <a href="#">MATH 2243</a>
-                <ul>
-                    <li><a href="hw6.html">Homework 6</a></li>
-                    <li><a href="hw5.html">Homework 5</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+    <main>
+        <h1>MATH 2243 Homework</h1>
 
-    <div class="content-wrapper">
-        <h1>Homework 5</h1>
-
-        <h2>Section 3.4</h2>
-        <div class="problem">
-            <h3>Problem 23</h3>
-            <p>Let
-                \[
-                \mathbf{A}=\begin{bmatrix}2&1\\3&2\end{bmatrix},\quad
-                \mathbf{B}=\begin{bmatrix}a&b\\c&d\end{bmatrix},
-                \]
-                and
-                \[
-                \mathbf{I}=\begin{bmatrix}1&0\\0&1\end{bmatrix}.
-                \]
-                Find $B$ so that $AB=I=BA$ as follows: first equate entries on both sides of $AB=I$.
-                Then solve for $a$, $b$, $c$, and $d$; finally verify that $BA=I$ as well.
-            </p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            <p>Compute</p>
-            \[
-            AB=
-            \begin{bmatrix}
-            2a+c & 2b+d\\
-            3a+2c & 3b+2d
-            \end{bmatrix}
-            =I
-            \;\Rightarrow\;
-            \begin{cases}
-            2a+c=1,\\
-            3a+2c=0,\\
-            2b+d=0,\\
-            3b+2d=1.
-            \end{cases}
-            \]
-            <p>Solve: from $2a+c=1$ and $3a+2c=0$ get $a=2,\ c=-3$; from $2b+d=0$ and $3b+2d=1$ get $b=-1,\ d=2$.
-            Hence</p>
-            \[
-            B=\begin{bmatrix}2&-1\\-3&2\end{bmatrix}.
-            \]
-            <p><b>Verification of $BA=I$:</b></p>
-            \[
-            BA=
-            \begin{bmatrix}2&-1\\-3&2\end{bmatrix}
-            \begin{bmatrix}2&1\\3&2\end{bmatrix}
-            =
-            \begin{bmatrix}
-            2\cdot2+(-1)\cdot3 & 2\cdot1+(-1)\cdot2\\
-            -3\cdot2+2\cdot3 & -3\cdot1+2\cdot2
-            \end{bmatrix}
-            =
-            \begin{bmatrix}1&0\\0&1\end{bmatrix}.
-            \]
-            <p>Thus $AB=I=BA$.</p>
-        </div>
-
-        <div class="problem">
-            <h3>Problem 39</h3>
-            <p>Use matrix multiplication to show that if $x_1$ and $x_2$ are two solutions of the homogeneous system $Ax=0$ and $c_1$ and $c_2$ are real numbers, then $c_1x_1+c_2x_2$ is also a solution.</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            <p>We want to prove
-            \[A(c_1x_1+c_2x_2)=0.\]
-            Distribute
-            \[c_1(Ax_1)+c_2(Ax_2)=0.\]
-            Plug in assumption from problem statement
-            \[c_1(0)+c_2(0)=0\]</p>
-        </div>
-
-        <div class="problem">
-            <h3>Problem 40</h3>
-            <p><b>(a)</b> Use matrix multiplication to show that if $x_0$ is a solution of the homogeneous system $Ax=0$ and $x_1$ is a solution of the nonhomogeneous system $Ax=b$, then $x_0+x_1$ is also a solution of the nonhomogeneous system.</p>
-            <p><b>(b)</b> Suppose that $x_1$ and $x_2$ are solutions of the nonhomogeneous system of part <b>(a)</b>. Show that $x_1 - x_2$ is a solution of the homogeneous system $Ax=0$.</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution (a):</b></p>
-            <p>We want to prove
-            \[A(x_0+x_1)=b.\]
-            Distribute
-            \[Ax_0+Ax_1=b.\]
-            Plug in assumption from problem statement
-            \[0+b=b.\]</p>
-            <p><b>Solution (b):</b></p>
-            <p>We want to prove
-            \[A(x_1-x_2)=0.\]
-            Distribute
-            \[Ax_1-Ax_2=0.\]
-            Plug in assumption from problem statement
-            \[b-b=0.\]</p>
-        </div>
-
-        <h2>Section 3.5</h2>
-        <div class="problem">
-            <h3>Problem 6</h3>
-            <p>First apply the Inverses of $2 \times 2$ Matrices Theorem to find $\mathbf{A^{-1}}$. Then use $\mathbf{A^{-1}}$ to solve the system $\mathbf{Ax=b}$
-            \[\mathbf{A}=\begin{bmatrix}4&7\\3&6\end{bmatrix},\mathbf{b}=\begin{bmatrix}10\\5\end{bmatrix}\]</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            <p>First we verify that $\mathbf{A}$ is invertible by ensuring its determinant is not equal to $0$.
-            \[det(\mathbf{A})=(4)(6)-(7)(3)=3\ne0\]
-            Now, apply the theorem.
-            \[
-            \mathbf{A^{-1}}=\frac{1}{3}\begin{bmatrix}6&-7\\-3&4\end{bmatrix}=\begin{bmatrix}2&-\frac{7}{3}\\-1&\frac{4}{3}\end{bmatrix}
-            \]
-            To evaluate $\mathbf{Ax=b}$, multiply both sides by $\mathbf{A^{-1}}$.
-            \[
-            \mathbf{x}=(A^{-1})b=\begin{bmatrix}2&-\frac{7}{3}\\-1&\frac{4}{3}\end{bmatrix}\begin{bmatrix}10\\5\end{bmatrix}=\begin{bmatrix}2(10)-\frac{7}{3}(5)\\-1(10)+\frac{4}{3}(5)\end{bmatrix}=\boxed{\begin{bmatrix}\frac{25}{3}\\-\frac{10}{3}\end{bmatrix}}
-            \]
+        <details>
+            <summary>Homework 1: Sections 1.1 - 1.3</summary>
+            <div class="homework-content">
+                <p>This is where your homework problems will go.</p>
+                <p>Here is an example of what MathJax can do. This LaTeX code:</p>
+                <pre>$\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}$</pre>
+                <p>...will render as this:</p>
+                <p>$\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}$</p>
             </div>
+        </details>
 
-        <div class="problem">
-            <h3>Problem 19</h3>
-            <p>Find the inverse $A^{-1}$ of each given matrix $A$.
-            \[\begin{bmatrix}1&4&3\\1&4&5\\2&5&1\end{bmatrix}\]</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            \[
-            \begin{aligned}
-            \left[\begin{array}{ccc|ccc}
-            1 & 4 & 3 & 1 & 0 & 0\\
-            1 & 4 & 5 & 0 & 1 & 0\\
-            2 & 5 & 1 & 0 & 0 & 1
-            \end{array}\right]
-            &{\substack{R_2-R_1\\R_3-2R_1}}
-            \left[\begin{array}{ccc|ccc}
-            1 & 4 & 3 & 1 & 0 & 0\\
-            0 & 0 & 2 & -1 & 1 & 0\\
-            0 & -3 & -5 & -2 & 0 & 1
-            \end{array}\right]
-            \substack{\mathbf{swap}(R_2, R_3)}
-            \left[\begin{array}{ccc|ccc}
-            1 & 4 & 3 & 1 & 0 & 0\\
-            0 & -3 & -5 & -2 & 0 & 1\\
-            0 & 0 & 2 & -1 & 1 & 0
-            \end{array}\right]
-            \\
-            &{\substack{(-\tfrac{1}{3})R_2\\ R_1-4R_2}}
-            \left[\begin{array}{ccc|ccc}
-            1 & 0 & -\tfrac{11}{3} & -\tfrac{5}{3} & 0 & \tfrac{4}{3}\\
-            0 & 1 & \tfrac{5}{3} & \tfrac{2}{3} & 0 & -\tfrac{1}{3}\\
-            0 & 0 & 2 & -1 & 1 & 0
-            \end{array}\right]
-            {\substack{\tfrac{1}{2}R_3\\R_1+\tfrac{11}{3}R_3\\R_2-\tfrac{5}{3}R_3}}
-            \left[\begin{array}{ccc|ccc}
-            1 & 0 & 0 & -\tfrac{7}{2} & \tfrac{11}{6} & \tfrac{4}{3}\\
-            0 & 1 & 0 & \tfrac{3}{2} & -\tfrac{5}{6} & -\tfrac{1}{3}\\
-            0 & 0 & 1 & -\tfrac{1}{2} & \tfrac{1}{2} & 0
-            \end{array}\right]
-            \end{aligned}
-            \]
-            \[
-            \therefore A^{-1}=
-            \boxed{
-            \begin{bmatrix}
-            -\tfrac{7}{2} & \tfrac{11}{6} & \tfrac{4}{3}\\
-            \tfrac{3}{2} & -\tfrac{5}{6} & -\tfrac{1}{3}\\
-            -\tfrac{1}{2} & \tfrac{1}{2} & 0
-            \end{bmatrix}
-            }
-            \]
-        </div>
+        <details>
+            <summary>Homework 2: Sections 1.4 - 1.6</summary>
+            <div class="homework-content">
+                <p>This homework is not posted yet.</p>
+            </div>
+        </details>
 
-        <div class="problem">
-            <h3>Problem 27</h3>
-            <p>Find a matrix $X$ such that $AX=B$.
-            \[\left.\mathbf{A}=\left[\begin{array}{ccc}1&-2&3\\2&1&7\\2&2&7\end{array}\right.\right],\mathbf{B}=\left[\begin{array}{cccc}0&0&1&1\\0&1&0&1\\1&0&1&0\end{array}\right]\]</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            <p>First finding $\mathbf{A^{-1}}$</p>
-            \[
-            \begin{align}
-            \left[\begin{array}{ccc|ccc}
-            1 & -2 & 3 & 1 & 0 & 0\\
-            2 & 1 & 7 & 0 & 1 & 0\\
-            2 & 2 & 7 & 0 & 0 & 1
-            \end{array}\right]
-            &{\substack{R_2-2R_1\\R_3-2R_1}}
-            \left[\begin{array}{ccc|ccc}
-            1 & -2 & 3 & 1 & 0 & 0\\
-            0 & 5 & 1 & -2 & 1 & 0\\
-            0 & 6 & 1 & -2 & 0 & 1
-            \end{array}\right]
-            {\substack{5R_3-6R_2}}
-            \left[\begin{array}{ccc|ccc}
-            1 & -2 & 3 & 1 & 0 & 0\\
-            0 & 5 & 1 & -2 & 1 & 0\\
-            0 & 0 & -1 & 2 & -6 & 5
-            \end{array}\right]\\
-            &{\substack{R_2+R_3\\-R_3}}
-            \left[\begin{array}{ccc|ccc}
-            1 & -2 & 3 & 1 & 0 & 0\\
-            0 & 5 & 0 & 0 & -5 & 5\\
-            0 & 0 & 1 & -2 & 6 & -5
-            \end{array}\right]
-            {\substack{R_1-3R_3\\\frac{1}{5}R_2}}
-            \left[\begin{array}{ccc|ccc}
-            1 & -2 & 0 & 7 & -18 & 15\\
-            0 & 1 & 0 & 0 & -1 & 1\\
-            0 & 0 & 1 & -2 & 6 & -5
-            \end{array}\right]
-            {\substack{R_1+2R_2}}
-            \left[\begin{array}{ccc|ccc}
-            1 & 0 & 0 & 7 & -20 & 17\\
-            0 & 1 & 0 & 0 & -1 & 1\\
-            0 & 0 & 1 & -2 & 6 & -5
-            \end{array}\right]
-            \end{align}
-            \]
-            \[
-            \therefore \mathbf{A^{-1}}= \left[\begin{array}{ccc}
-            7 & -20 & 17\\
-            0 & -1 & 1\\
-            -2 & 6 & -5
-            \end{array}\right]\\
-            \]
-            <p>and multiplying the result by $\mathbf{B}$</p>
-            \[
-            \mathbf{\cancel{(A^{-1})A}X} = \mathbf{A^{-1}B}
-            \]
-            \[
-            \mathbf{X}= \left[\begin{array}{ccc}
-            7 & -20 & 17\\
-            0 & -1 & 1\\
-            -2 & 6 & -5
-            \end{array}\right]
-            \left[\begin{array}{cccc}0&0&1&1\\0&1&0&1\\1&0&1&0\end{array}\right]
-            \]
-            \[
-            \mathbf{X}=
-            \boxed{
-            \begin{bmatrix}
-            17 & -20 & 24 & -13\\
-            1 & -1 & 1 & -1\\
-            -5 & 6 & -7 & 4
-            \end{bmatrix}
-            }
-            \]
-        </div>
+        <details>
+            <summary>Homework 3: Section 2.1</summary>
+            <div class="homework-content">
+                <p>This homework is not posted yet.</p>
+            </div>
+        </details>
 
-        <div class="problem">
-            <h3>Problem 30</h3>
-            <p>Suppose that $A$, $B$, and $C$ are invertible matrices of the same size. Show that the product $ABC$ is invertible and that $(ABC)^{-1} =C^{-1}B^{-1}A^{-1}$.</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            <p>Let $A$, $B$, and $C$ be invertible matrices of the same size. To show that $ABC$ is invertible, we must find a matrix $X$ such that
-            \[
-            (ABC)X = X(ABC) = I.
-            \]
-            Consider $X = C^{-1}B^{-1}A^{-1}$. Then,
-            \[
-            (ABC)(C^{-1}B^{-1}A^{-1})
-            = AB(CC^{-1})B^{-1}A^{-1}
-            = A(BB^{-1})A^{-1}
-            = AA^{-1}
-            = I.
-            \]
-            Similarly,
-            \[
-            (C^{-1}B^{-1}A^{-1})(ABC)
-            = C^{-1}B^{-1}(A^{-1}A)BC
-            = C^{-1}(B^{-1}B)C
-            = C^{-1}C
-            = I.
-            \]
-            Since both products give the identity matrix,
-            \[
-            (ABC)^{-1} = C^{-1}B^{-1}A^{-1}.
-            \]
-            Therefore, the product $ABC$ is invertible and its inverse is the reverse product of the individual inverses.</p>
-        </div>
-
-        <div class="problem">
-            <h3>Problem 36</h3>
-            <p>Show that $\mathbf{A}=\begin{bmatrix}a&b\\c&d\end{bmatrix}$ is not invertible if $ad-bc=0$.</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            <p>Recall the formula for an inverse of a $2\times2$ matrix:
-            \[
-            A^{-1}=\frac{1}{ad-bc}
-            \begin{bmatrix}
-            d&-b\\
-            -c&a
-            \end{bmatrix}
-            \]
-            The given condition, $ad-bc=0$ would result in a division by $0$.
-            i.e. undefined.</p>
-        </div>
-
-        <div class="problem">
-            <h3>Problem 39</h3>
-            <p>Let $\mathbf{E}$ be the elementary matrix $\mathbf{E_2}$ of Example 6 and suppose that $\mathbf{A}$ is a $3\times3$ matrix. Show that $\mathbf{EA}$ is the result upon adding twice the first row of $\mathbf{A}$ to its third row.</p>
-            <p><i>Example 6:</i>
-            \[
-            \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}\quad\xrightarrow{(2)R_1+R_3}\quad\begin{bmatrix}1&0&0\\0&1&0\\2&0&1\end{bmatrix}=\mathbf{E}_2
-            \]</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            <p>The elementary matrix $\mathbf{E}_2$ corresponds to the row operation $(2)R_1 + R_3 \to R_3$, meaning that twice the first row is added to the third row.
-            Let
-            \[
-            \mathbf{E}_2 = 
-            \begin{bmatrix}
-            1 & 0 & 0 \\
-            0 & 1 & 0 \\
-            2 & 0 & 1
-            \end{bmatrix},
-            \quad
-            \mathbf{A} =
-            \begin{bmatrix}
-            a_{11} & a_{12} & a_{13} \\
-            a_{21} & a_{22} & a_{23} \\
-            a_{31} & a_{32} & a_{33}
-            \end{bmatrix}.
-            \]
-            Then,
-            \[
-            \mathbf{EA} =
-            \begin{bmatrix}
-            1 & 0 & 0 \\
-            0 & 1 & 0 \\
-            2 & 0 & 1
-            \end{bmatrix}
-            \begin{bmatrix}
-            a_{11} & a_{12} & a_{13} \\
-            a_{21} & a_{22} & a_{23} \\
-            a_{31} & a_{32} & a_{33}
-            \end{bmatrix}.
-            \]
-            Performing the matrix multiplication:
-            \[
-            \mathbf{EA} =
-            \begin{bmatrix}
-            a_{11} & a_{12} & a_{13} \\
-            a_{21} & a_{22} & a_{23} \\
-            2a_{11}+a_{31} & 2a_{12}+a_{32} & 2a_{13}+a_{33}
-            \end{bmatrix}.
-            \]
-            The first two rows are unchanged, and the third row is obtained by adding twice the first row of $\mathbf{A}$ to the original third row.
-            Therefore, $\mathbf{EA}$ is the result of applying the row operation $(2)R_1 + R_3 \to R_3$ to $\mathbf{A}$.</p>
-        </div>
-
-        <h2>Section 3.6</h2>
-        <div class="problem">
-            <h3>Problem 6</h3>
-            <p>Use cofactor expansions to evaluate the determinant. Expand along the row or column that minimizes the
-            amount of computation that is required.
-            \[\left|\begin{array}{rrrrr}3&0&11&-5&0\\-2&4&13&6&5\\0&0&5&0&0\\7&6&-9&17&7\\0&0&8&2&0\end{array}\right|\]</p>
-        </div>
-        <div class="solution">
-            <p><b>Solution:</b></p>
-            \[
-            \begin{aligned}
-            |\mathbf{A}|&=...+5
-            \begin{vmatrix}
-            3&0&-5&0\\
-            -2&4&6&5\\
-            7&6&17&7\\
-            0&0&2&0
-            \end{vmatrix}
-            +...\;(\text{All other terms simplify to }0)
-            \\
-            &=5\left(...-2
-            \begin{vmatrix}
-            3&0&0\\
-            -2&4&5\\
-            7&6&7
-            \end{vmatrix}
-            +...
-            \right)\\
-            &=5\left(-2\left(
-            3\begin{vmatrix}
-            4&5\\
-            6&7
-            \end{vmatrix}
-            +...
-            \right)\right)\\
-            &=5(-2(3((4)(7)-(5)(6))))\\
-            &=\boxed{60}
-            \end{d{aligned}
-            \]
-        </div>
-
-    </div>
+    </main>
 
 </body>
 </html>
