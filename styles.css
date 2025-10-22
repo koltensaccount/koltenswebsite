@@ -40,10 +40,10 @@ margin:0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 160px));
   justify-content: center;
-  gap: 1.5rem;
+  gap: 0.5rem;  /* Reduced gap to allow overlap */
   padding-bottom: 4rem;
-  /* Add perspective for 3D effect */
   perspective: 1000px;
+  position: relative;
 }
 
 /* The Poster Ambient Effect */
@@ -53,11 +53,15 @@ margin:0;
   overflow: visible;
   border-radius: 12px;
   max-width: 160px;
-  /* Initial transform state */
   transform-style: preserve-3d;
-  transform: translateZ(0) rotateY(-15deg) rotateX(5deg);
+  transform: translateZ(0) rotateY(-15deg) rotateX(5deg) translateX(-10px);
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 1;
+  margin-left: -40px; /* Create overlap effect */
+}
+
+.poster-wrapper:first-child {
+  margin-left: 0;
 }
 
 .poster-wrapper::before {
@@ -75,11 +79,20 @@ margin:0;
 }
 
 .poster-wrapper:hover {
-  transform: translateZ(50px) rotateY(0deg) rotateX(0deg);
-  z-index: 2;
+  transform: translateZ(50px) rotateY(0deg) rotateX(0deg) translateX(0);
+  z-index: 10; /* Ensure hovered card appears on top */
   box-shadow: 
     0 15px 30px rgba(0,0,0,0.3),
     0 0 30px rgba(255,255,255,0.1); /* Reduced glow intensity */
+}
+
+/* Adjusting the stacking order for non-hovered items */
+.poster-wrapper:not(:hover) {
+  filter: brightness(0.8);
+}
+
+.poster-wrapper:hover ~ .poster-wrapper {
+  transform: translateX(40px); /* Push subsequent cards to the right when one is hovered */
 }
 
 .poster-wrapper:hover::before {
