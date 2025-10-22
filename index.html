@@ -3,88 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kolten's Homework</title>
+    <title>Kolten's Website</title>
     <style>
-        /* Modern Academic Style (Seamless) */
+        /* Modern, Apple-inspired style */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
-            color: #1d1d1f;
+            background-color: #ffffff; /* Clean white background */
+            color: #1d1d1f; /* Apple's standard dark text color */
+            -webkit-font-smoothing: antialiased;
         }
 
-        main {
-            max-width: 800px; /* A good width for academic work */
-            margin: 0 auto;
-            padding: 50px 20px;
+        /* The main content area */
+        .content-wrapper {
+            max-width: 800px; /* Standard width for a blog/portfolio */
+            margin: 0 auto; /* Centers the content */
+            padding: 60px 20px; /* Spacing from top/bottom and sides */
         }
 
-        h1 {
+        header {
+            border-bottom: 1px solid #d2d2d7; /* A subtle separator line */
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
             font-size: 2.5em;
             font-weight: 600;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 15px;
+            margin: 0;
         }
 
+        /* Style for a section title, like "Homework" */
+        h2 {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        p.intro {
+            font-size: 1.1em;
+            line-height: 1.7; /* Very important for readability */
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* This styles the dropdown */
         details {
+            background-color: #f9f9f9; /* A very light gray box */
+            border-radius: 12px;
             margin-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden; /* This keeps the rounded corners */
         }
 
+        /* This styles the clickable "Homework 5" part */
         summary {
-            font-size: 1.4em;
+            font-size: 1.3em;
             font-weight: 500;
-            padding: 20px 10px;
+            padding: 20px 25px;
             cursor: pointer;
-            list-style: none;
+            list-style: none; /* Removes the default triangle */
         }
         
         summary:hover {
-            background-color: #f9f9f9;
+            background-color: #f0f0f0;
         }
 
+        /* This is the content *inside* the dropdown */
         .homework-content {
-            padding: 0px 10px 25px 10px;
+            padding: 0px 25px 25px 25px;
+            border-top: 1px solid #e8e8ed;
         }
 
         /* This styles the embedded PDF "window" */
         .pdf-embed {
             width: 100%;
             height: 800px; /* You can change this height! */
-            border: 1px solid #e0e0e0;
+            border: none; /* Remove the border, it's inside the box now */
             border-radius: 6px;
+            margin-top: 20px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            border-top: 1px solid #d2d2d7;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #86868b; /* A light gray for footer text */
         }
     </style>
 </head>
 <body>
 
-    <main>
-        <h1>MATH 2243 Homework</h1>
+    <div class="content-wrapper">
+        <header>
+            <h1>Kolten's Website</h1>
+        </header>
 
-        <details>
-            <summary>Homework 5</summary>
-            <div class="homework-content">
-                <p>Showing <b>hw5.pdf</b> embedded below:</p>
-                
-                <iframe 
-                    src="hw5.pdf" 
-                    class="pdf-embed"
-                    title="Homework 5 PDF Viewer">
-                </iframe>
-            </div>
-        </details>
+        <main>
+            <p class="intro">
+                Welcome to my personal site. I'm building this from scratch to learn
+                how web development works. Below is a collection of my
+                coursework.
+            </p>
+        
+            <h2>MATH 2243 Homework</h2>
+        
+            <details>
+                <summary>Homework 5</summary>
+                <div class="homework-content">
+                    <iframe 
+                        src="hw5.pdf" 
+                        class="pdf-embed"
+                        title="Homework 5 PDF Viewer">
+                    </iframe>
+                </div>
+            </details>
 
-        <details>
-            <summary>Homework 4</summary>
-            <div class="homework-content">
-                <p>
-                    (You would upload a file named <b>hw4.pdf</b> for this one.)
-                </p>
-            </div>
-        </Ddetails>
+            <details>
+                <summary>Homework 4</summary>
+                <div class="homework-content">
+                    <p>
+                        (This is where you would put <b>hw4.pdf</b>)
+                    </p>
+                </div>
+            </details>
+        </main>
 
-    </main>
+        <footer>
+            <p>&copy; 2025 Kolten. All rights reserved.</p>
+        </footer>
+    </div>
 
 </body>
 </html>
