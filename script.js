@@ -38,9 +38,6 @@
       header.classList.remove('scrolled');
     }
   });
-
-  // Helpful hint: if your HW pdf isn't in assets/hw.pdf, update the link in index.html:
-  // <a class="hw-button" href="assets/hw.pdf" ...> — point that href to your PDF file path in the repo.
 })();
 
 // === ADD THIS TO script.js ===

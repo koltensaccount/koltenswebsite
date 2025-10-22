@@ -126,6 +126,229 @@ margin:0;
   filter: none;
 }
 
+/* Notebook covers */
+.notebook-cover {
+  width: 160px;
+  height: 220px;
+  background: linear-gradient(135deg, #2a2f3b, #1a1e24);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.notebook-cover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.notebook-cover h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.notebook-cover p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.poster-wrapper.notebook {
+  cursor: pointer;
+}
+
+.poster-wrapper.notebook a {
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.poster-wrapper.notebook:hover {
+  transform: translateZ(50px) rotateY(0deg) rotateX(0deg) translateX(0);
+}
+
+.poster-wrapper.notebook:hover .notebook-cover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+/* Notebook detail pages */
+.breadcrumbs {
+  margin: 0 0 24px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.breadcrumbs a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus {
+  color: var(--accent);
+  outline: none;
+}
+
+.notebook-hero {
+  padding: 80px 0 40px;
+  text-align: center;
+}
+
+.notebook-hero h1 {
+  margin: 0 0 16px 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.02em;
+}
+
+.notebook-lede {
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.notebook-meta {
+  margin-top: 32px;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 16px 20px;
+  min-width: 160px;
+  text-align: left;
+}
+
+.meta-label {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.meta-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.notes-section {
+  padding: 20px 0 80px;
+}
+
+.notes-section .section-intro {
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 auto 36px auto;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.note-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.45);
+}
+
+.note-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.note-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.note-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(111,184,255,0.18), rgba(111,184,255,0.08));
+  border: 1px solid rgba(111,184,255,0.25);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.note-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(27,86,139,0.16);
+}
+
+.note-link.disabled {
+  opacity: 0.6;
+  border-style: dashed;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+.note-card.note-card--cta {
+  border-style: dashed;
+  border-color: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.02);
+}
+
+@media (max-width: 600px) {
+  .notebook-hero {
+    padding: 60px 0 24px;
+  }
+
+  .notes-section {
+    padding-bottom: 60px;
+  }
+}
+
 /* Enhanced sticky header with liquid glass effect */
 .site-header {
   position: sticky;
@@ -192,25 +415,13 @@ margin:0;
 }
 
 /* HW button: compact, glassy pill */
-.header-actions{display:flex;align-items:center;gap:12px}
-.hw-button{
-  display:inline-flex;
+.header-actions{
+  display:flex;
   align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border-radius:999px;
-  color:#fff;
-  background: linear-gradient(180deg, rgba(111,184,255,0.14), rgba(111,184,255,0.06));
-  border: 1px solid rgba(111,184,255,0.14);
-  font-weight:600;
-  text-decoration:none;
-  box-shadow: 0 6px 18px rgba(27,86,139,0.12), inset 0 1px 0 rgba(255,255,255,0.03);
-  transition: transform .12s ease, box-shadow .12s ease;
-  font-size:0.92rem;
+  gap:12px;
+  justify-content:flex-end;
+  min-width:48px;
 }
-.hw-button svg{display:block;opacity:0.95}
-.hw-button:hover{transform:translateY(-3px);box-shadow: 0 12px 26px rgba(27,86,139,0.16)}
-.hw-label{letter-spacing:0.03em}
 
 /* menu toggle (mobile) */
 .menu-toggle{display:none;background:transparent;border:0;padding:8px;border-radius:10px;cursor:pointer}
