@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework 5 - Kolten's Website</title> 
+    <title>Kolten's Website</title>
     
     <style>
         /* This CSS styles your whole site, including the animation and text */
@@ -13,7 +13,7 @@
             padding: 0;
             background-color: #111; /* Dark background for the animation */
             color: #fff;
-            /* We remove 'overflow: hidden' so the content page can scroll! */
+            overflow: hidden; /* Hide scrollbars as canvas fills screen */
         }
 
         /* The canvas sits in the background, fixed to the viewport */
@@ -42,35 +42,34 @@
         nav ul li:hover > ul { display: block; }
         nav ul ul li { width: 100%; }
         
-        /* --- THIS IS THE NEW STYLE FOR YOUR HOMEWORK CONTENT --- */
-        .content-wrapper {
-            max-width: 900px;
-            margin: 40px auto; /* Spacing from nav bar and centers it */
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.95); /* Mostly solid white */
-            backdrop-filter: blur(10px); /* Frosted glass */
-            border-radius: 12px;
-            color: #111; /* Dark text for the white box */
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        }
-        .content-wrapper h1 {
-            font-size: 2.5em;
-            font-weight: 600;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 15px;
-        }
-        .content-wrapper p {
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-        .pdf-embed {
-            width: 100%;
-            height: 800px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            margin-top: 20px;
+        /* --- Main Centered Content --- */
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: calc(100vh - 61px); /* Full height minus nav bar */
+            padding: 20px;
         }
 
+        .hero-content h1 {
+            font-size: 4em;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -2px;
+            /* A cool gradient effect on the text */
+            background: linear-gradient(45deg, #f3ec78, #af4261);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.5em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -89,18 +88,9 @@
         </ul>
     </nav>
 
-    <div class="content-wrapper">
-        <h1>MATH 2243 - Homework 5</h1>
-        <p>
-            This is the embedded PDF for my homework. Make sure you have uploaded
-            <b>hw5.pdf</b> to your GitHub repository for this to work!
-        </p>
-        
-        <iframe 
-            src="hw5.pdf" 
-            class="pdf-embed" 
-            title="Homework 5 PDF Viewer">
-        </iframe>
+    <div class="hero-content">
+        <h1>Welcome.</h1>
+        <p>This is my personal website, a space to learn and experiment with web development.</p>
     </div>
 
     <script>
@@ -164,41 +154,4 @@
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < maxDistance) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxDistance})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        // --- Animation Loop ---
-        // This is the engine that runs every frame
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear screen
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update(); // Update position
-                particlesArray[i].draw();   // Draw particle
-            }
-            connect(); // Draw the lines between them
-            requestAnimationFrame(animate); // Tell the browser to do it again
-        }
-
-        // --- Event Listener ---
-        // Make the canvas responsive if the user resizes their window
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            init(); // Re-create particles for the new size
-        });
-
-        // --- Start the animation! ---
-        init();
-        animate();
-    </script>
-
-</body>
-</html>
+                        ctx.strokeStyle = `rgba(255, 255,
