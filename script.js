@@ -43,6 +43,38 @@
   // <a class="hw-button" href="assets/hw.pdf" ...> — point that href to your PDF file path in the repo.
 })();
 
+// === ADD THIS TO script.js ===
+
+/*
+* NOTE: If you already have a "DOMContentLoaded" event listener
+* in your script.js, just copy the code from INSIDE this function
+* and put it inside your existing one.
+*/
+document.addEventListener("DOMContentLoaded", function() {
+
+  // --- Start of code to add --- //
+
+  // Find all poster wrappers on the page
+  const posterWrappers = document.querySelectorAll('.poster-wrapper');
+
+  // Loop through each one
+  posterWrappers.forEach(wrapper => {
+    // 1. Find the image inside this specific wrapper
+    const img = wrapper.querySelector('img');
+    
+    // 2. Get its image source URL
+    // We use .src to get the full, resolved URL
+    const imgSrc = img.src; 
+
+    // 3. Set the CSS variable (--poster-bg) on the wrapper
+    //    The '::before' element will automatically pick this up!
+    wrapper.style.setProperty('--poster-bg', `url(${imgSrc})`);
+  });
+
+  // --- End of code to add --- //
+
+});
+
 // Circuit scrolling animation logic
 (function () {
   const visual = document.querySelector('.animation-section .visual');
