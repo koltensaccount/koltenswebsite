@@ -1,259 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kolten's Website</title>
-    
-    <style>
-        /* This CSS styles your whole site, including the animation and text */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #111; /* Dark background for the animation */
-            color: #fff;
-            overflow: hidden; /* Hide scrollbars as canvas fills screen */
-        }
-
-        /* The canvas sits in the background, fixed to the viewport */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Puts it behind everything else */
-        }
-
-        /* --- NEW: Navigation Bar (Upgraded Style) --- */
-        nav {
-            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0 40px;
-        }
-
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        nav ul li { position: relative; }
-        nav ul li a {
-            display: block;
-            padding: 20px;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            position: relative; /* Needed for the new hover effect */
-        }
-        
-        /* NEW: This is the animated underline */
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 12px; /* Position underline below the text */
-            left: 20px; /* Match the link's padding */
-            width: calc(100% - 40px); /* Match the link's padding */
-            height: 2px;
-            background-color: #f3ec78; /* Use your cool gradient color */
-            transform: scaleX(0); /* Starts hidden */
-            transform-origin: left;
-            transition: transform 0.3s ease-out;
-        }
-        
-        /* NEW: This makes the underline appear on hover */
-        nav ul li a:hover::after {
-            transform: scaleX(1); /* Animate to full width */
-        }
-
-        /* (We removed the old background-color hover) */
-        
-        nav ul ul { display: none; position: absolute; background-color: #222; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); min-width: 200px; }
-        nav ul li:hover > ul { display: block; }
-        nav ul ul li { width: 100%; }
-        
-        /* --- Main Centered Content (Upgraded Style) --- */
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: calc(100vh - 61px); /* Full height minus nav bar */
-            padding: 20px;
-        }
-
-        .hero-content h1 {
-            font-size: 4em;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -2px;
-            color: #fff; /* Fallback color */
-        }
-
-        /* NEW: This is the part that will be typed */
-        #typewriter {
-            /* A cool gradient effect on the text */
-            background: linear-gradient(45deg, #f3ec78, #af4261);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* NEW: This is the blinking cursor for the typewriter */
-        #typewriter::after {
-            content: '_';
-            opacity: 1;
-            animation: blink 0.7s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .hero-content p {
-            font-size: 1.5em;
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 600px;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>STEM Scroll Animations — Demo</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <canvas id="particle-canvas"></canvas>
-
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li>
-                <a href="#">MATH 2243</a>
-                <ul>
-                    <li><a href="hw6.html">Homework 6</a></li>
-                    <li><a href="hw5.html">Homework 5</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="hero-content">
-        <h1>Hello, I'm <span id="typewriter"></span></h1>
-        <p>This is my personal website, a space to learn and experiment with web development.</p>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="#">kolten • ece</a>
+      <nav class="nav"><a href="#learn">Learn</a><a href="#projects">Projects</a></nav>
     </div>
+  </header>
 
-    <script>
-        // --- NEW: Typewriter Script ---
-        const typewriterElement = document.getElementById('typewriter');
-        const words = ["Kolten.", "a Student.", "a Developer."];
-        let wordIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+  <main>
+    <!-- Hero / first fold -->
+    <section class="hero">
+      <div class="hero-inner container">
+        <h1 class="title">Engineering in Motion</h1>
+        <p class="subtitle">Scroll to reveal circuits, chips and motion — built for STEM minds.</p>
+      </div>
+      <div class="hero-graphics">
+        <!-- Simple layered background for parallax -->
+        <div class="bg-layer layer-1"></div>
+        <div class="bg-layer layer-2"></div>
+      </div>
+    </section>
 
-        function type() {
-            const currentWord = words[wordIndex];
-            let typeSpeed = 150;
+    <!-- Animation section: chip + circuit SVG -->
+    <section class="animation-section container" id="learn">
+      <div class="visual">
+        <div class="chip" aria-hidden="true">
+          <!-- The chip is a stylized rectangle with glow; rotated/tilted in JS -->
+          <svg width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg" class="chip-svg">
+            <defs>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
 
-            if (isDeleting) {
-                // Deleting
-                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-                typeSpeed = 75;
-            } else {
-                // Typing
-                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-            }
+            <!-- chip body -->
+            <rect x="48" y="38" width="184" height="144" rx="14" fill="#0b1221" stroke="#0f1724" stroke-width="2" filter="url(#glow)"></rect>
 
-            if (!isDeleting && charIndex === currentWord.length) {
-                // Pause at end of word
-                isDeleting = true;
-                typeSpeed = 2000; // 2-second pause
-            } else if (isDeleting && charIndex === 0) {
-                // Move to next word
-                isDeleting = false;
-                wordIndex++;
-                if (wordIndex === words.length) {
-                    wordIndex = 0;
-                }
-            }
-            
-            setTimeout(type, typeSpeed);
-        }
-        
-        // --- Particle Animation Script (Your original code) ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particlesArray = [];
-        const numberOfParticles = 100;
-        const maxDistance = 100;
+            <!-- chip pin highlights -->
+            <g fill="#dbeafe" opacity="0.06">
+              <rect x="26" y="46" width="14" height="8" rx="2"></rect>
+              <rect x="26" y="70" width="14" height="8" rx="2"></rect>
+              <rect x="240" y="46" width="14" height="8" rx="2"></rect>
+              <rect x="240" y="70" width="14" height="8" rx="2"></rect>
+            </g>
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+            <!-- circuit traces (paths will be animated drawing) -->
+            <g class="traces" stroke="#60a5fa" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <!-- example traces — you can replace these with your own SVG traces -->
+              <path d="M160 38 L160 10" />
+              <path d="M120 38 L120 0" />
+              <path d="M106 38 C80 60 40 80 28 120" />
+              <path d="M174 38 C200 60 240 80 252 120" />
+              <path d="M120 182 C120 210 100 210 84 200" />
+              <path d="M160 182 C160 210 180 210 196 200" />
+              <path d="M84 120 L48 120" />
+              <path d="M232 120 L268 120" />
+            </g>
+          </svg>
+        </div>
 
-        function init() {
-            particlesArray = [];
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
+        <svg class="floating-wave" width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 60 Q50 10 100 60 T200 60" stroke="#7dd3fc" stroke-width="2" fill="none" opacity="0.65"/>
+        </svg>
+      </div>
 
-        function connect() {
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    const dx = particlesArray[a].x - particlesArray[b].x;
-                    const dy = particlesArray[a].y - particlesArray[b].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < maxDistance) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxDistance})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
+      <div class="copy">
+        <h2>From theory to creation</h2>
+        <p>As you scroll, circuit traces draw themselves, the chip tilts in 3D, and subtle parallax layers create depth — like product motion you see from leading design teams.</p>
+        <p class="hint">Tip: Replace SVG traces with your own schematic-style paths (optimized SVG) for a personal ECE look.</p>
+      </div>
+    </section>
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            connect();
-            requestAnimationFrame(animate);
-        }
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            init();
-        });
+    <!-- Info / projects with reveal-on-scroll cards -->
+    <section class="cards container" id="projects" aria-label="projects">
+      <article class="card reveal">
+        <h3>Analog Design</h3>
+        <p>Low-noise amplifier experiments and PCB layout notes.</p>
+      </article>
 
-        // --- Start everything! ---
-        init();     // Start the particle animation
-        animate();  // Start the animation loop
-        type();     // Start the typewriter
-    </script>
+      <article class="card reveal">
+        <h3>Microcontroller Projects</h3>
+        <p>Embedded code + schematics for sensor fusion and motor control.</p>
+      </article>
 
+      <article class="card reveal">
+        <h3>Signals & Systems</h3>
+        <p>Visualization of Fourier transforms and filter responses.</p>
+      </article>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>kolten • electrical engineering portfolio — demo animations</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- GSAP + ScrollTrigger from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
