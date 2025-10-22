@@ -3,86 +3,63 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>STEM Scroll Animations — Demo</title>
+  <title>Kolten — Electrical Engineering Portfolio</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <a class="logo" href="#">kolten • ece</a>
-      <nav class="nav"><a href="#learn">Learn</a><a href="#projects">Projects</a></nav>
+  <header class="site-header glass" role="banner">
+    <div class="container header-row">
+      <a class="logo" href="#">kolten<span class="logo-sub"> • ece</span></a>
+
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <a href="#learn">Learn</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <!-- HW PDF button — update href to the actual pdf path in your repo -->
+      <div class="header-actions">
+        <a class="hw-button" href="assets/hw.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open homework PDF (opens in new tab)">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M6 2h7l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM13 3.5V9h5.5L13 3.5z"/>
+          </svg>
+          <span class="hw-label">HW</span>
+        </a>
+
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="hamburger"></span>
+        </button>
+      </div>
     </div>
   </header>
 
   <main>
-    <!-- Hero / first fold -->
     <section class="hero">
-      <div class="hero-inner container">
+      <div class="container hero-inner">
         <h1 class="title">Engineering in Motion</h1>
-        <p class="subtitle">Scroll to reveal circuits, chips and motion — built for STEM minds.</p>
+        <p class="subtitle">Clean, thoughtful visuals for circuits, systems and projects — designed with focus and restraint.</p>
       </div>
-      <div class="hero-graphics">
-        <!-- Simple layered background for parallax -->
-        <div class="bg-layer layer-1"></div>
-        <div class="bg-layer layer-2"></div>
+
+      <div class="hero-visuals">
+        <!-- existing SVG / visual elements go here (keep them lightweight) -->
+        <!-- Example placeholder for the chip graphic used previously -->
+        <div class="chip-placeholder" aria-hidden="true">
+          <!-- You can keep your SVG here (chip + traces) -->
+        </div>
       </div>
     </section>
 
-    <!-- Animation section: chip + circuit SVG -->
     <section class="animation-section container" id="learn">
       <div class="visual">
-        <div class="chip" aria-hidden="true">
-          <!-- The chip is a stylized rectangle with glow; rotated/tilted in JS -->
-          <svg width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg" class="chip-svg">
-            <defs>
-              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-
-            <!-- chip body -->
-            <rect x="48" y="38" width="184" height="144" rx="14" fill="#0b1221" stroke="#0f1724" stroke-width="2" filter="url(#glow)"></rect>
-
-            <!-- chip pin highlights -->
-            <g fill="#dbeafe" opacity="0.06">
-              <rect x="26" y="46" width="14" height="8" rx="2"></rect>
-              <rect x="26" y="70" width="14" height="8" rx="2"></rect>
-              <rect x="240" y="46" width="14" height="8" rx="2"></rect>
-              <rect x="240" y="70" width="14" height="8" rx="2"></rect>
-            </g>
-
-            <!-- circuit traces (paths will be animated drawing) -->
-            <g class="traces" stroke="#60a5fa" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <!-- example traces — you can replace these with your own SVG traces -->
-              <path d="M160 38 L160 10" />
-              <path d="M120 38 L120 0" />
-              <path d="M106 38 C80 60 40 80 28 120" />
-              <path d="M174 38 C200 60 240 80 252 120" />
-              <path d="M120 182 C120 210 100 210 84 200" />
-              <path d="M160 182 C160 210 180 210 196 200" />
-              <path d="M84 120 L48 120" />
-              <path d="M232 120 L268 120" />
-            </g>
-          </svg>
-        </div>
-
-        <svg class="floating-wave" width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M0 60 Q50 10 100 60 T200 60" stroke="#7dd3fc" stroke-width="2" fill="none" opacity="0.65"/>
-        </svg>
+        <!-- keep your SVG chip/traces here; not duplicated in this demo -->
       </div>
 
       <div class="copy">
         <h2>From theory to creation</h2>
-        <p>As you scroll, circuit traces draw themselves, the chip tilts in 3D, and subtle parallax layers create depth — like product motion you see from leading design teams.</p>
-        <p class="hint">Tip: Replace SVG traces with your own schematic-style paths (optimized SVG) for a personal ECE look.</p>
+        <p>As you scroll, circuit traces draw themselves, the chip tilts slightly, and subtle parallax creates depth. The layout has been simplified and spaced for clarity so your work stands front-and-center.</p>
       </div>
     </section>
 
-    <!-- Info / projects with reveal-on-scroll cards -->
     <section class="cards container" id="projects" aria-label="projects">
       <article class="card reveal">
         <h3>Analog Design</h3>
@@ -107,9 +84,6 @@
     </footer>
   </main>
 
-  <!-- GSAP + ScrollTrigger from CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
