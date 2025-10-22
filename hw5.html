@@ -1,253 +1,158 @@
-# We'll read the user's LaTeX files from /mnt/data, perform a lightweight conversion to HTML,
-# and save a single self-contained HTML file with embedded CSS and MathJax for math rendering.
-
-import re
-from pathlib import Path
-
-# Paths
-preamble_path = Path("/mnt/data/preamble.tex")
-doc_path = Path("/mnt/data/MATH 2243 Homework 5.tex")
-html_out = Path("/mnt/data/MATH_2243_Homework_5.html")
-
-# Read files
-preamble = preamble_path.read_text(encoding="utf-8", errors="ignore") if preamble_path.exists() else ""
-tex = doc_path.read_text(encoding="utf-8", errors="ignore") if doc_path.exists() else ""
-
-# Helper: strip comments
-def strip_comments(s: str) -> str:
-    return "\n".join([re.split(r'(?<!\\)%', line)[0] for line in s.splitlines()])
-
-# Basic cleaning
-tex_clean = strip_comments(tex)
-
-# Extract document body between \begin{document}...\end{document}
-m = re.search(r"\\begin\{document\}(.*)\\end\{document\}", tex_clean, re.DOTALL)
-body = m.group(1).strip() if m else tex_clean
-
-# Replace common LaTeX macros in a simple way
-def convert_inline(text: str) -> str:
-    # Basic escapes
-    repl = [
-        (r"\\textbf\{([^{}]+)\}", r"<strong>\1</strong>"),
-        (r"\\textit\{([^{}]+)\}", r"<em>\1</em>"),
-        (r"\\emph\{([^{}]+)\}", r"<em>\1</em>"),
-        (r"\\underline\{([^{}]+)\}", r"<u>\1</u>"),
-        (r"``", "&ldquo;"),
-        (r"''", "&rdquo;"),
-        (r"\\%", "%"),
-        (r"\\&", "&amp;"),
-        (r"~", "&nbsp;"),
-    ]
-    for pat, rep in repl:
-        text = re.sub(pat, rep, text)
-    return text
-
-# Convert display math \[...\] and $$...$$ to MathJax blocks
-def convert_math(text: str) -> str:
-    # Keep math as-is but ensure proper delimiters
-    # We'll wrap $$..$$ and \[..\] in <div class="math display"> ... </div>
-    text = re.sub(r"\\\[(.*?)\\\]", r'<div class="math display">\\[\1\\]</div>', text, flags=re.DOTALL)
-    text = re.sub(r"\$\$(.*?)\$\$", r'<div class="math display">$$\1$$</div>', text, flags=re.DOTALL)
-    # Inline $...$
-    # Avoid matching \$
-    text = re.sub(r"(?<!\\)\$(.+?)(?<!\\)\$", r'<span class="math inline">$\1$</span>', text, flags=re.DOTALL)
-    return text
-
-# Convert sections
-def convert_sections(text: str) -> str:
-    patterns = [
-        (r"\\section\*?\{([^{}]+)\}", r"<h2>\1</h2>"),
-        (r"\\subsection\*?\{([^{}]+)\}", r"<h3>\1</h3>"),
-        (r"\\subsubsection\*?\{([^{}]+)\}", r"<h4>\1</h4>"),
-        (r"\\paragraph\*?\{([^{}]+)\}", r"<h5>\1</h5>"),
-    ]
-    for pat, rep in patterns:
-        text = re.sub(pat, rep, text)
-    return text
-
-# Convert itemize/enumerate
-def convert_lists(text: str) -> str:
-    # itemize
-    def repl_itemize(m):
-        content = m.group(1)
-        items = re.split(r"\\item", content)[1:]
-        items_html = "".join(f"<li>{convert_block(i.strip())}</li>" for i in items)
-        return f"<ul>{items_html}</ul>"
-    text = re.sub(r"\\begin\{itemize\}(.*?)\\end\{itemize\}", repl_itemize, text, flags=re.DOTALL)
-
-    # enumerate
-    def repl_enum(m):
-        content = m.group(1)
-        items = re.split(r"\\item", content)[1:]
-        items_html = "".join(f"<li>{convert_block(i.strip())}</li>" for i in items)
-        return f"<ol>{items_html}</ol>"
-    text = re.sub(r"\\begin\{enumerate\}(.*?)\\end\{enumerate\}", repl_enum, text, flags=re.DOTALL)
-
-    # description
-    def repl_desc(m):
-        content = m.group(1)
-        # \item[Label] content
-        def item_label_repl(mm):
-            label = mm.group(1)
-            rest = mm.group(2)
-            return f"<dt>{convert_inline(label)}</dt><dd>{convert_block(rest.strip())}</dd>"
-        content = re.sub(r"\\item\[(.*?)\](.*?)(?=(\\item|\Z))", item_label_repl, content, flags=re.DOTALL)
-        return f"<dl>{content}</dl>"
-    text = re.sub(r"\\begin\{description\}(.*?)\\end\{description\}", repl_desc, text, flags=re.DOTALL)
-
-    return text
-
-# Convert tabular into HTML tables
-def convert_tables(text: str) -> str:
-    def repl_tabular(m):
-        colspec = m.group(1)
-        content = m.group(2).strip()
-        # Split rows by \\\\
-        rows = re.split(r"(?<!\\)\\\\", content)
-        html_rows = []
-        for row in rows:
-            row = row.strip()
-            if not row or row == r"\hline":
-                continue
-            # Remove \hline occurrences
-            row = row.replace(r"\hline", " ")
-            # Split cells by & not preceded by \
-            cells = [c.strip() for c in re.split(r"(?<!\\)&", row)]
-            tds = "".join(f"<td>{convert_math(convert_inline(c))}</td>" for c in cells)
-            html_rows.append(f"<tr>{tds}</tr>")
-        table_html = "<table class='latex-table'>" + "".join(html_rows) + "</table>"
-        return table_html
-
-    text = re.sub(r"\\begin\{tabular\}\{([^}]*)\}(.*?)\\end\{tabular\}", repl_tabular, text, flags=re.DOTALL)
-
-    # Remove outer table/figure environments but keep captions if present
-    text = re.sub(r"\\begin\{table\}.*?\\centering", "<div class='table-wrap'>", text, flags=re.DOTALL)
-    text = re.sub(r"\\end\{table\}", "</div>", text)
-    text = re.sub(r"\\begin\{figure\}.*?\\centering", "<div class='figure-wrap'>", text, flags=re.DOTALL)
-    text = re.sub(r"\\end\{figure\}", "</div>", text)
-    text = re.sub(r"\\caption\{([^}]+)\}", r"<div class='caption'>\1</div>", text)
-
-    return text
-
-# Convert simple \begin{align}.. etc by passing math through MathJax
-def convert_align(text: str) -> str:
-    text = re.sub(r"\\begin\{align\*\}(.*?)\\end\{align\*\}", r'<div class="math display">\\[\1\\]</div>', text, flags=re.DOTALL)
-    text = re.sub(r"\\begin\{align\}(.*?)\\end\{align\}", r'<div class="math display">\\[\1\\]</div>', text, flags=re.DOTALL)
-    text = re.sub(r"\\begin\{equation\*\}(.*?)\\end\{equation\*\}", r'<div class="math display">\\[\1\\]</div>', text, flags=re.DOTALL)
-    text = re.sub(r"\\begin\{equation\}(.*?)\\end\{equation\}", r'<div class="math display">\\[\1\\]</div>', text, flags=re.DOTALL)
-    return text
-
-# Remove unknown environments by keeping their content
-def strip_env(name, text):
-    return re.sub(rf"\\begin\{{{name}\}}(.*?)\\end\{{{name}\}}", r"\1", text, flags=re.DOTALL)
-
-def convert_block(text: str) -> str:
-    t = text
-    t = convert_sections(t)
-    t = convert_lists(t)
-    t = convert_tables(t)
-    t = convert_align(t)
-    t = convert_math(t)
-    t = convert_inline(t)
-    # Simple line breaks: double newlines to paragraphs
-    paras = [p.strip() for p in re.split(r"\n\s*\n", t) if p.strip()]
-    t = "".join(f"<p>{p}</p>" for p in paras)
-    # remove multiple empty <p>
-    t = re.sub(r"<p>\s*</p>", "", t)
-    return t
-
-# Pre-handle some environments that we will just unwrap
-for env in ["center", "flushleft", "flushright", "changemargin", "adjustwidth"]:
-    body = strip_env(env, body)
-
-# Convert the LaTeX body
-html_body = convert_block(body)
-
-# Basic CSS to mimic LaTeX look
-css = """
-:root {
-  --maxw: 800px;
-}
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  color: #111;
-  font-family: 'Times New Roman', Times, serif;
-  line-height: 1.4;
-}
-main {
-  max-width: var(--maxw);
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-h1, h2, h3, h4, h5 {
-  font-weight: 600;
-  margin: 1.2rem 0 0.6rem;
-}
-h2 { font-size: 1.6rem; }
-h3 { font-size: 1.35rem; }
-h4 { font-size: 1.15rem; }
-p { margin: 0.6rem 0; }
-.latex-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0.8rem 0;
-  font-size: 0.98rem;
-}
-.latex-table td, .latex-table th {
-  border: 1px solid #444;
-  padding: 0.25rem 0.5rem;
-  vertical-align: top;
-}
-.table-wrap, .figure-wrap {
-  text-align: center;
-  margin: 1rem 0;
-}
-.caption {
-  font-size: 0.95rem;
-  color: #333;
-  margin-top: 0.3rem;
-}
-.math.display { text-align: center; margin: 0.8rem 0; }
-.math.inline { }
-code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-hr { border: none; border-top: 1px solid #999; margin: 1.2rem 0; }
-"""
-
-# Compose final HTML
-html = f"""<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MATH 2243 Homework 5 — HTML</title>
-<style>
-{css}
-</style>
-<!-- MathJax -->
-<script>
-window.MathJax = {{
-  tex: {{
-    inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
-    displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
-    processEscapes: true,
-    tags: 'none'
-  }},
-  svg: {{ fontCache: 'global' }}
-}};
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 5 - Kolten's Website</title> 
+    
+    <style>
+        /* This CSS is almost identical to your homepage */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            color: #fff;
+            /* We need to allow scrolling on this page */
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        nav {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0 40px;
+        }
+
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        nav ul li { position: relative; }
+        nav ul li a { display: block; padding: 20px; color: #ffffff; text-decoration: none; font-weight: 500; }
+        nav ul li a:hover { background-color: rgba(255, 255, 255, 0.1); }
+        nav ul ul { display: none; position: absolute; background-color: #222; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); min-width: 200px; }
+        nav ul li:hover > ul { display: block; }
+        nav ul ul li { width: 100%; }
+        
+        /* This is the container for the PDF */
+        .pdf-container {
+            max-width: 900px; /* A good width for the PDF */
+            margin: 40px auto; /* Centers it with space from nav bar */
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 1100px; /* A tall embed for a full document */
+            border: 1px solid #555; /* A subtle border */
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-<main>
-{html_body}
-</main>
+    <canvas id="particle-canvas"></canvas>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">MATH 2243</a>
+                <ul>
+                    <li><a href="hw6.html">Homework 6</a></li>
+                    <li><a href="hw5.html">Homework 5</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="pdf-container">
+        <iframe 
+            src="hw5.pdf" 
+            class="pdf-embed" 
+            title="Homework 5 PDF Viewer">
+        </iframe>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray = [];
+        const numberOfParticles = 100;
+        const maxDistance = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function connect() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    const dx = particlesArray[a].x - particlesArray[b].x;
+                    const dy = particlesArray[a].y - particlesArray[b].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < maxDistance) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxDistance})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            connect();
+            requestAnimationFrame(animate);
+        }
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
+
 </body>
 </html>
-"""
-
-# Write output
-html_out.write_text(html, encoding="utf-8")
-
-html_out.as_posix()
