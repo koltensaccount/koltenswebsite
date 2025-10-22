@@ -38,11 +38,12 @@ margin:0;
 
 .poster-grid {
   display: grid;
-  /* Make posters smaller and more reasonable */
   grid-template-columns: repeat(auto-fit, minmax(140px, 160px));
   justify-content: center;
   gap: 1.5rem;
   padding-bottom: 4rem;
+  /* Add perspective for 3D effect */
+  perspective: 1000px;
 }
 
 /* The Poster Ambient Effect */
@@ -52,34 +53,39 @@ margin:0;
   overflow: visible;
   border-radius: 12px;
   max-width: 160px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
+  /* Initial transform state */
+  transform-style: preserve-3d;
+  transform: translateZ(0) rotateY(-15deg) rotateX(5deg);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 1;
 }
 
 .poster-wrapper::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -20px;
   background: var(--poster-bg, none);
   background-size: cover;
   background-position: center;
-  filter: blur(30px); /* Much stronger blur */
-  opacity: 0.7; /* Higher opacity to see colors better */
-  transform: scale(1.2); /* Spread the blur out more */
+  filter: blur(15px);
+  opacity: 0.25; /* Reduced glow opacity */
+  transform: translateZ(-10px) scale(0.8);
   z-index: -1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .poster-wrapper:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.2),
-              0 0 60px rgba(255,255,255,0.2); /* Enhanced glow on hover */
+  transform: translateZ(50px) rotateY(0deg) rotateX(0deg);
+  z-index: 2;
+  box-shadow: 
+    0 15px 30px rgba(0,0,0,0.3),
+    0 0 30px rgba(255,255,255,0.1); /* Reduced glow intensity */
 }
 
 .poster-wrapper:hover::before {
-  opacity: 0.9;
-  transform: scale(1.4); /* Spread even more on hover */
+  opacity: 0.4; /* Slightly increased glow on hover but still reduced */
+  transform: translateZ(-20px) scale(1.1);
+  filter: blur(20px);
 }
 
 .poster-wrapper img {
@@ -89,6 +95,7 @@ margin:0;
   border-radius: inherit;
   position: relative;
   z-index: 1;
+  backface-visibility: hidden;
 }
 
 /* Remove the old blur container effects */
