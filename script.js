@@ -1,87 +1,35 @@
-// script.js — animations (GSAP + ScrollTrigger)
-// - Draws SVG traces
-// - Tilts/rotates the chip on scroll
-// - Parallax background movement
-// - Simple reveal for cards using ScrollTrigger
+// Lightweight interaction helpers for the updated header + reduced-motion handling
 
-gsap.registerPlugin(ScrollTrigger);
+(function () {
+  const body = document.body;
+  const header = document.querySelector('.site-header');
+  const menuToggle = document.querySelector('.menu-toggle');
 
-// Helper: animate SVG paths as if being drawn
-document.querySelectorAll('.traces path').forEach((p, i) => {
-  const len = p.getTotalLength();
-  // set up initial stroke dash so path is hidden
-  p.style.strokeDasharray = len;
-  p.style.strokeDashoffset = len;
-  // optional: add a slight delay between traces
-  gsap.to(p, {
-    strokeDashoffset: 0,
-    duration: 1.2,
-    ease: 'power1.out',
-    scrollTrigger: {
-      trigger: '.animation-section',
-      start: 'top 70%',
-      end: 'bottom 40%',
-      scrub: 0.6,
-      invalidateOnRefresh: true
-    }
-  });
-});
-
-// Chip tilt & subtle scale on scroll — gives 3d apple-like motion
-gsap.to('.chip', {
-  rotationX: 20,
-  rotationY: 18,
-  scale: 1.04,
-  transformOrigin: '50% 50%',
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.animation-section',
-    start: 'top center',
-    end: 'bottom top',
-    scrub: true
+  // Mobile menu toggle
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!expanded));
+      header.classList.toggle('stacked');
+    });
   }
-});
 
-// Parallax the background layer slightly for depth
-gsap.to('.layer-1', {
-  yPercent: -12,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.hero',
-    start: 'top top',
-    end: 'bottom top',
-    scrub: true
+  // Add a tiny transform to header on scroll for depth, but avoid if prefers-reduced-motion
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced) {
+    let lastY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      // subtle lift as you scroll down
+      if (y > 10) {
+        header.style.transform = 'translateY(-6px) scale(0.995)';
+      } else {
+        header.style.transform = '';
+      }
+      lastY = y;
+    }, { passive: true });
   }
-});
-gsap.to('.layer-2', {
-  yPercent: -6,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.hero',
-    start: 'top top',
-    end: 'bottom top',
-    scrub: true
-  }
-});
 
-// Reveal cards when they enter viewport
-document.querySelectorAll('.reveal').forEach((el) => {
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 85%',
-    onEnter: () => {
-      el.classList.add('is-visible');
-      el.style.opacity = 1;
-      el.style.transform = 'translateY(0)';
-    }
-  });
-});
-
-// Optional: subtle floating animation for small wave SVG
-gsap.to('.floating-wave', {
-  y: -14,
-  repeat: -1,
-  yoyo: true,
-  duration: 3.6,
-  ease: 'sine.inOut'
-});
+  // Helpful hint: if your HW pdf isn't in assets/hw.pdf, update the link in index.html:
+  // <a class="hw-button" href="assets/hw.pdf" ...> — point that href to your PDF file path in the repo.
+})();
