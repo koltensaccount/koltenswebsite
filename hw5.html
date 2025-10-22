@@ -7,6 +7,7 @@
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <script>
       window.MathJax = {
         tex: {
@@ -29,9 +30,17 @@
         nav ul li:hover > ul {display: block;}
         nav ul ul li {width: 100%;}
         .content-wrapper {max-width: 700px; margin: 0 auto; padding: 50px 20px;}
-        .content-wrapper h1 {font-size: 2.8em; font-weight: 600; margin-bottom: 20px;}
-        .content-wrapper h3 {font-weight: 600; border-bottom: 1px solid #e8e8ed; padding-bottom: 8px;}
+        .content-wrapper h1 {font-size: 2.8em; font-weight: 600; margin-bottom: 20px; text-align: center;}
+        .content-wrapper h2 {font-size: 2em; font-weight: 600; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-top: 40px;}
+        .content-wrapper h3 {font-weight: 600; font-size: 1.4em; color: #333;}
         .content-wrapper p {font-size: 1.1em; line-height: 1.7; color: #333;}
+        .solution {
+            background-color: #ffffff;
+            border-left: 3px solid #007aff;
+            padding: 1px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -52,46 +61,371 @@
     <div class="content-wrapper">
         <h1>Homework 5</h1>
 
-        <h3>Section 3.4, Problem 23</h3>
-        <p><i>Find $B$ so that $AB=I=BA$...</i> [cite: 17, 18]</p>
-        \[
-        \mathbf{A}=\begin{bmatrix}2&1\\3&2\end{bmatrix},\quad
-        \mathbf{B}=\begin{bmatrix}a&b\\c&d\end{bmatrix}
-        \]
-        <p><b>Solution:</b> [cite: 19, 20]</p>
-        \[
-        AB=
-        \begin{bmatrix}
-        2a+c & 2b+d\\
-        3a+2c & 3b+2d
-        \end{bmatrix}
-        =I
-        \;\Rightarrow\;
-        \begin{cases}
-        2a+c=1,\\
-        3a+2c=0,\\
-        2b+d=0,\\
-        3b+2d=1.
-        \end{cases}
-        \]
-        <p>...Hence</p>
-        \[
-        B=\begin{bmatrix}2&-1\\-3&2\end{bmatrix}.
-        \]
-
-        <h3>Section 3.5, Problem 6</h3>
-        <p><i>First apply the Inverses of $2 \times 2$ Matrices Theorem to find $\mathbf{A^{-1}}$. Then use $\mathbf{A^{-1}}$ to solve the system $\mathbf{Ax=b}$</i> [cite: 25]</p>
-        \[\mathbf{A}=\begin{bmatrix}4&7\\3&6\end{bmatrix},\mathbf{b}=\begin{bmatrix}10\\5\end{bmatrix}\]
-        <p><b>Solution:</b> [cite: 26, 27]</p>
-        <p>First we verify that $\mathbf{A}$ is invertible... $det(\mathbf{A})=(4)(6)-(7)(3)=3\ne0$</p>
-        \[
-        \mathbf{A^{-1}}=\frac{1}{3}\begin{bmatrix}6&-7\\-3&4\end{bmatrix}
-        \]
-        \[
-        \mathbf{x}=(A^{-1})b=\begin{bmatrix}2&-\frac{7}{3}\\-1&\frac{4}{3}\end{bmatrix}\begin{bmatrix}10\\5\end{bmatrix}=\boxed{\begin{bmatrix}\frac{25}{3}\\-\frac{10}{3}\end{bmatrix}}
-        \]
-
+        <h2>Section 3.4</h2>
+        <h3>Problem 23</h3>
+        <p>Let
+            \[
+            \mathbf{A}=\begin{bmatrix}2&1\\3&2\end{bmatrix},\quad
+            \mathbf{B}=\begin{bmatrix}a&b\\c&d\end{bmatrix},
+            \]
+            and
+            \[
+            \mathbf{I}=\begin{bmatrix}1&0\\0&1\end{bmatrix}.
+            \]
+            Find $B$ so that $AB=I=BA$ as follows: first equate entries on both sides of $AB=I$.
+            Then solve for $a$, $b$, $c$, and $d$; finally verify that $BA=I$ as well. [cite: 17, 18]
+        </p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            <p>Compute</p>
+            \[
+            AB=
+            \begin{bmatrix}
+            2a+c & 2b+d\\
+            3a+2c & 3b+2d
+            \end{bmatrix}
+            =I
+            \;\Rightarrow\;
+            \begin{cases}
+            2a+c=1,\\
+            3a+2c=0,\\
+            2b+d=0,\\
+            3b+2d=1.
+            \end{cases}
+            \]
+            <p>Solve: from $2a+c=1$ and $3a+2c=0$ get $a=2,\ c=-3$; from $2b+d=0$ and $3b+2d=1$ get $b=-1,\ d=2$. [cite: 19]
+            Hence</p>
+            \[
+            B=\begin{bmatrix}2&-1\\-3&2\end{bmatrix}.
+            \]
+            <p><b>Verification of $BA=I$:</b></p>
+            \[
+            BA=
+            \begin{bmatrix}2&-1\\-3&2\end{bmatrix}
+            \begin{bmatrix}2&1\\3&2\end{bmatrix}
+            =
+            \begin{bmatrix}
+            2\cdot2+(-1)\cdot3 & 2\cdot1+(-1)\cdot2\\
+            -3\cdot2+2\cdot3 & -3\cdot1+2\cdot2
+            \end{bmatrix}
+            =
+            \begin{bmatrix}1&0\\0&1\end{bmatrix}.
+            \]
+            <p>Thus $AB=I=BA$. [cite: 20]</p>
         </div>
+
+        <h3>Problem 39</h3>
+        <p>Use matrix multiplication to show that if $x_1$ and $x_2$ are two solutions of the homogeneous system $Ax=0$ and $c_1$ and $c_2$ are real numbers, then $c_1x_1+c_2x_2$ is also a solution. [cite: 21]</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            <p>We want to prove
+            \[A(c_1x_1+c_2x_2)=0.\]
+            Distribute
+            \[c_1(Ax_1)+c_2(Ax_2)=0.\]
+            Plug in assumption from problem statement
+            \[c_1(0)+c_2(0)=0\]</p>
+        </div>
+
+        <h3>Problem 40</h3>
+        <p><b>(a)</b> Use matrix multiplication to show that if $x_0$ is a solution of the homogeneous system $Ax=0$ and $x_1$ is a solution of the nonhomogeneous system $Ax=b$, then $x_0+x_1$ is also a solution of the nonhomogeneous system. [cite: 22]</p>
+        <p><b>(b)</b> Suppose that $x_1$ and $x_2$ are solutions of the nonhomogeneous system of part <b>(a)</b>. [cite: 23] Show that $x_1 - x_2$ is a solution of the homogeneous system $Ax=0$. [cite: 24]</p>
+        <div class="solution">
+            <p><b>Solution (a):</b></p>
+            <p>We want to prove
+            \[A(x_0+x_1)=b.\]
+            Distribute
+            \[Ax_0+Ax_1=b.\]
+            Plug in assumption from problem statement
+            \[0+b=b.\]</p>
+            <p><b>Solution (b):</b></p>
+            <p>We want to prove
+            \[A(x_1-x_2)=0.\]
+            Distribute
+            \[Ax_1-Ax_2=0.\]
+            Plug in assumption from problem statement
+            \[b-b=0.\]</p>
+        </div>
+
+        <h2>Section 3.5</h2>
+        <h3>Problem 6</h3>
+        <p>First apply the Inverses of $2 \times 2$ Matrices Theorem to find $\mathbf{A^{-1}}$. Then use $\mathbf{A^{-1}}$ to solve the system $\mathbf{Ax=b}$ [cite: 25]
+        \[\mathbf{A}=\begin{bmatrix}4&7\\3&6\end{bmatrix},\mathbf{b}=\begin{bmatrix}10\\5\end{bmatrix}\]</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            <p>First we verify that $\mathbf{A}$ is invertible by ensuring its determinant is not equal to $0$. [cite: 26]
+            \[det(\mathbf{A})=(4)(6)-(7)(3)=3\ne0\]
+            Now, apply the theorem.
+            \[
+            \mathbf{A^{-1}}=\frac{1}{3}\begin{bmatrix}6&-7\\-3&4\end{bmatrix}=\begin{bmatrix}2&-\frac{7}{3}\\-1&\frac{4}{3}\end{bmatrix}
+            \]
+            To evaluate $\mathbf{Ax=b}$, multiply both sides by $\mathbf{A^{-1}}$. [cite: 27]
+            \[
+            \mathbf{x}=(A^{-1})b=\begin{bmatrix}2&-\frac{7}{3}\\-1&\frac{4}{3}\end{bmatrix}\begin{bmatrix}10\\5\end{bmatrix}=\begin{bmatrix}2(10)-\frac{7}{3}(5)\\-1(10)+\frac{4}{3}(5)\end{bmatrix}=\boxed{\begin{bmatrix}\frac{25}{3}\\-\frac{10}{3}\end{bmatrix}}
+            \]</p>
+        </div>
+
+        <h3>Problem 19</h3>
+        <p>Find the inverse $A^{-1}$ of each given matrix $A$. [cite: 28]
+        \[\begin{bmatrix}1&4&3\\1&4&5\\2&5&1\end{bmatrix}\]</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            \[
+            \begin{aligned}
+            \left[\begin{array}{ccc|ccc}
+            1 & 4 & 3 & 1 & 0 & 0\\
+            1 & 4 & 5 & 0 & 1 & 0\\
+            2 & 5 & 1 & 0 & 0 & 1
+            \end{array}\right]
+            {\substack{R_2-R_1\\R_3-2R_1}}
+            \left[\begin{array}{ccc|ccc}
+            1 & 4 & 3 & 1 & 0 & 0\\
+            0 & 0 & 2 & -1 & 1 & 0\\
+            0 & -3 & -5 & -2 & 0 & 1
+            \end{array}\right]
+            \substack{\mathbf{swap}(R_2, R_3)}
+            \left[\begin{array}{ccc|ccc}
+            1 & 4 & 3 & 1 & 0 & 0\\
+            0 & -3 & -5 & -2 & 0 & 1\\
+            0 & 0 & 2 & -1 & 1 & 0
+            \end{array}\right]
+            \\
+            {\substack{(-\tfrac{1}{3})R_2\\ R_1-4R_2}}
+            \left[\begin{array}{ccc|ccc}
+            1 & 0 & -\tfrac{11}{3} & -\tfrac{5}{3} & 0 & \tfrac{4}{3}\\
+            0 & 1 & \tfrac{5}{3} & \tfrac{2}{3} & 0 & -\tfrac{1}{3}\\
+            0 & 0 & 2 & -1 & 1 & 0
+            \end{array}\right]
+            {\substack{\tfrac{1}{2}R_3\\R_1+\tfrac{11}{3}R_3\\R_2-\tfrac{5}{3}R_3}}
+            \left[\begin{array}{ccc|ccc}
+            1 & 0 & 0 & -\tfrac{7}{2} & \tfrac{11}{6} & \tfrac{4}{3}\\
+            0 & 1 & 0 & \tfrac{3}{2} & -\tfrac{5}{6} & -\tfrac{1}{3}\\
+            0 & 0 & 1 & -\tfrac{1}{2} & \tfrac{1}{2} & 0
+            \end{array}\right]
+            \end{aligned}
+            \]
+            \[
+            \therefore A^{-1}=
+            \boxed{
+            \begin{bmatrix}
+            -\tfrac{7}{2} & \tfrac{11}{6} & \tfrac{4}{3}\\
+            \tfrac{3}{2} & -\tfrac{5}{6} & -\tfrac{1}{3}\\
+            -\tfrac{1}{2} & \tfrac{1}{2} & 0
+            \end{bmatrix}
+            }
+            \]
+        </div>
+
+        <h3>Problem 27</h3>
+        <p>Find a matrix $X$ such that $AX=B$. [cite: 30]
+        \[\left.\mathbf{A}=\left[\begin{array}{ccc}1&-2&3\\2&1&7\\2&2&7\end{array}\right.\right],\mathbf{B}=\left[\begin{array}{cccc}0&0&1&1\\0&1&0&1\\1&0&1&0\end{array}\right]\]</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            <p>First finding $\mathbf{A^{-1}}$</p>
+            \[
+            \begin{align}
+            \left[\begin{array}{ccc|ccc}
+            1 & -2 & 3 & 1 & 0 & 0\\
+            2 & 1 & 7 & 0 & 1 & 0\\
+            2 & 2 & 7 & 0 & 0 & 1
+            \end{array}\right]
+            &{\substack{R_2-2R_1\\R_3-2R_1}}
+            \left[\begin{array}{ccc|ccc}
+            1 & -2 & 3 & 1 & 0 & 0\\
+            0 & 5 & 1 & -2 & 1 & 0\\
+            0 & 6 & 1 & -2 & 0 & 1
+            \end{array}\right]
+            {\substack{5R_3-6R_2}}
+            \left[\begin{array}{ccc|ccc}
+            1 & -2 & 3 & 1 & 0 & 0\\
+            0 & 5 & 1 & -2 & 1 & 0\\
+            0 & 0 & -1 & 2 & -6 & 5
+            \end{array}\right]\\
+            &{\substack{R_2+R_3\\-R_3}}
+            \left[\begin{array}{ccc|ccc}
+            1 & -2 & 3 & 1 & 0 & 0\\
+            0 & 5 & 0 & 0 & -5 & 5\\
+            0 & 0 & 1 & -2 & 6 & -5
+            \end{array}\right]
+            {\substack{R_1-3R_3\\\frac{1}{5}R_2}}
+            \left[\begin{array}{ccc|ccc}
+            1 & -2 & 0 & 7 & -18 & 15\\
+            0 & 1 & 0 & 0 & -1 & 1\\
+            0 & 0 & 1 & -2 & 6 & -5
+            \end{array}\right]
+            {\substack{R_1+2R_2}}
+            \left[\begin{array}{ccc|ccc}
+            1 & 0 & 0 & 7 & -20 & 17\\
+            0 & 1 & 0 & 0 & -1 & 1\\
+            0 & 0 & 1 & -2 & 6 & -5
+            \end{array}\right]
+            \end{align}
+            \]
+            \[
+            \therefore \mathbf{A^{-1}}= \left[\begin{array}{ccc}
+            7 & -20 & 17\\
+            0 & -1 & 1\\
+            -2 & 6 & -5
+            \end{array}\right]\\
+            \]
+            <p>and multiplying the result by $\mathbf{B}$ [cite: 32]</p>
+            \[
+            \mathbf{X}= \left[\begin{array}{ccc}
+            7 & -20 & 17\\
+            0 & -1 & 1\\
+            -2 & 6 & -5
+            \end{array}\right]
+            \left[\begin{array}{cccc}0&0&1&1\\0&1&0&1\\1&0&1&0\end{array}\right]
+            \]
+            \[
+            \mathbf{X}=
+            \boxed{
+            \begin{bmatrix}
+            17 & -20 & 24 & -13\\
+            1 & -1 & 1 & -1\\
+            -5 & 6 & -7 & 4
+            \end{bmatrix}
+            }
+            \]
+        </div>
+
+        <h3>Problem 30</h3>
+        <p>Suppose that $A$, $B$, and $C$ are invertible matrices of the same size. [cite: 33] Show that the product $ABC$ is invertible and that $(ABC)^{-1} =C^{-1}B^{-1}A^{-1}$. [cite: 34]</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            <p>Let $A$, $B$, and $C$ be invertible matrices of the same size. [cite: 35] To show that $ABC$ is invertible, we must find a matrix $X$ such that
+            \[
+            (ABC)X = X(ABC) = I.
+            \]
+            Consider $X = C^{-1}B^{-1}A^{-1}$. [cite: 36] Then,
+            \[
+            (ABC)(C^{-1}B^{-1}A^{-1})
+            = AB(CC^{-1})B^{-1}A^{-1}
+            = A(BB^{-1})A^{-1}
+            = AA^{-1}
+            = I.
+            \]
+            Similarly,
+            \[
+            (C^{-1}B^{-1}A^{-1})(ABC)
+            = C^{-1}B^{-1}(A^{-1}A)BC
+            = C^{-1}(B^{-1}B)C
+            = C^{-1}C
+            = I.
+            \]
+            Since both products give the identity matrix, [cite: 37]
+            \[
+            (ABC)^{-1} = C^{-1}B^{-1}A^{-1}.
+            \]
+            Therefore, the product $ABC$ is invertible and its inverse is the reverse product of the individual inverses. [cite: 38]</p>
+        </div>
+
+        <h3>Problem 36</h3>
+        <p>Show that $\mathbf{A}=\begin{bmatrix}a&b\\c&d\end{bmatrix}$ is not invertible if $ad-bc=0$.</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            <p>Recall the formula for an inverse of a $2\times2$ matrix:
+            \[
+            A^{-1}=\frac{1}{ad-bc}
+            \begin{bmatrix}
+            d&-b\\
+            -c&a
+            \end{bmatrix}
+            \]
+            The given condition, $ad-bc=0$ would result in a division by $0$. [cite: 39]
+            i.e. undefined.</p>
+        </div>
+
+        <h3>Problem 39</h3>
+        <p>Let $\mathbf{E}$ be the elementary matrix $\mathbf{E_2}$ of Example 6 and suppose that $\mathbf{A}$ is a $3\times3$ matrix. [cite: 40] Show that $\mathbf{EA}$ is the result upon adding twice the first row of $\mathbf{A}$ to its third row. [cite: 41]</p>
+        <p><i>Example 6:</i>
+        \[
+        \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{IACH}\quad\xrightarrow{(2)R_1+R_3}\quad\begin{bmatrix}1&0&0\\0&1&0\\2&0&1\end{bmatrix}=\mathbf{E}_2
+        \]</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            <p>The elementary matrix $\mathbf{E}_2$ corresponds to the row operation $(2)R_1 + R_3 \to R_3$, meaning that twice the first row is added to the third row. [cite: 42]
+            Let
+            \[
+            \mathbf{E}_2 = 
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & 1 & 0 \\
+            2 & 0 & 1
+            \end{bmatrix},
+            \quad
+            \mathbf{A} =
+            \begin{bmatrix}
+            a_{11} & a_{12} & a_{13} \\
+            a_{21} & a_{22} & a_{23} \\
+            a_{31} & a_{32} & a_{33}
+            \end{bmatrix}.
+            [cite: 43] \]
+            Then,
+            \[
+            \mathbf{EA} =
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & 1 & 0 \\
+            2 & 0 & 1
+            \end{EACH}\begin{bmatrix}
+            a_{11} & a_{12} & a_{13} \\
+            a_{21} & a_{22} & a_{23} \\
+            a_{31} & a_{32} & a_{33}
+            \end{bmatrix}.
+            [cite: 44] \]
+            Performing the matrix multiplication:
+            \[
+            \mathbf{EA} =
+            \begin{bmatrix}
+            a_{11} & a_{12} & a_{13} \\
+            a_{21} & a_{22} & a_{23} \\
+            2a_{11}+a_{31} & 2a_{12}+a_{32} & 2a_{13}+a_{33}
+            \end{bmatrix}.
+            [cite: 45] \]
+            The first two rows are unchanged, and the third row is obtained by adding twice the first row of $\mathbf{A}$ to the original third row. [cite: 46]
+            Therefore, $\mathbf{EA}$ is the result of applying the row operation $(2)R_1 + R_3 \to R_3$ to $\mathbf{A}$. [cite: 47]</p>
+        </div>
+
+        <h2>Section 3.6</h2>
+        <h3>Problem 6</h3>
+        <p>Use cofactor expansions to evaluate the determinant. Expand along the row or column that minimizes the
+        amount of computation that is required. [cite: 48]
+        \[\left|\begin{array}{rrrrr}3&0&11&-5&0\\-2&4&13&6&5\\0&0&5&0&0\\7&6&-9&17&7\\0&0&8&2&0\end{array}\right|\]</p>
+        <div class="solution">
+            <p><b>Solution:</b></p>
+            \[
+            \begin{aligned}
+            |\mathbf{A}|&=...+5
+            \begin{vmatrix}
+            3&0&-5&0\\
+            -2&4&6&5\\
+            7&6&17&7\\
+            0&0&2&0
+            \end{vmatrix}
+            +...\;(\text{All other terms simplify to }0)
+            \\
+            &=5\left(...-2
+            \begin{vmatrix}
+            3&0&0\\
+            -2&4&5\\
+            7&6&7
+            \end{vmatrix}
+            +...
+            \right)\\
+            &=5\left(-2\left(
+            3\begin{vmatrix}
+            4&5\\
+            6&7
+            \end{vmatrix}
+            +...
+            \right)\right)\\
+            &=5(-2(3((4)(7)-(5)(6))))\\
+            &=\boxed{60}
+            \end{aligned}
+            \]
+        </div>
+
+    </div>
 
 </body>
 </html>
