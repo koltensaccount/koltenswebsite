@@ -24,7 +24,79 @@ body{
 }
 
 .container{max-width:var(--container);margin:0 auto;padding:28px}
+/* === ADD THIS TO styles.css === */
 
+/* New Section for Interests */
+.section-title {
+  font-family: sans-serif; /* You can change this to match your site */
+  font-size: 2.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.poster-grid {
+  display: grid;
+  /* This creates a responsive grid. It will fit as many
+     250px-wide columns as it can, and centers them */
+  grid-template-columns: repeat(auto-fit, 250px);
+  justify-content: center;
+  gap: 2rem;
+  padding-bottom: 4rem; /* Space before the footer */
+}
+
+/* The Poster Ambient Effect */
+.poster-wrapper {
+  position: relative;
+  display: inline-block; 
+  /* This crops the glow so it stays neat */
+  overflow: hidden; 
+  border-radius: 12px;
+  max-width: 250px; /* Matches the grid column size */
+  
+  /* A subtle shadow for depth */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  
+  /* A nice hover effect */
+  transition: transform 0.3s ease;
+}
+
+.poster-wrapper:hover {
+  transform: scale(1.03); /* Slight zoom on hover */
+}
+
+.poster-wrapper img {
+  display: block; 
+  position: relative; 
+  z-index: 2; /* Sits on top of the glow */
+  width: 100%; 
+  border-radius: 12px; /* Match the wrapper's rounded corners */
+}
+
+/* This is the "glow" layer */
+.poster-wrapper::before {
+  content: "";
+  position: absolute;
+  z-index: 1; /* Sits BEHIND the image */
+
+  /* Make it slightly bigger than the image */
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  
+  /* This variable is set by our JavaScript */
+  background-image: var(--poster-bg); 
+  
+  background-size: cover;
+  background-position: center;
+  
+  /* This is the "blur" you wanted! */
+  filter: blur(20px);
+  /* This makes the glow a bit more subtle */
+  opacity: 0.8;
+}
 /* Enhanced sticky header with liquid glass effect */
 .site-header {
   position: sticky;
