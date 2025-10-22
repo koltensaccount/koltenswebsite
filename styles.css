@@ -50,53 +50,61 @@ margin:0;
 .poster-wrapper {
   position: relative;
   display: inline-block; 
-  /* This crops the glow so it stays neat */
-  overflow: hidden; 
+  overflow: visible;
   border-radius: 12px;
-  max-width: 250px; /* Matches the grid column size */
-  
-  /* A subtle shadow for depth */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-  
-  /* A nice hover effect */
-  transition: transform 0.3s ease;
+  max-width: 250px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15),
+              0 0 30px rgba(255,255,255,0.1); /* Added ambient glow */
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.poster-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: inherit;
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  transform: translateZ(0); /* Force GPU acceleration */
 }
 
 .poster-wrapper:hover {
-  transform: scale(1.03); /* Slight zoom on hover */
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2),
+              0 0 60px rgba(255,255,255,0.2); /* Enhanced glow on hover */
 }
 
-.poster-wrapper img {
-  display: block; 
-  position: relative; 
-  z-index: 2; /* Sits on top of the glow */
-  width: 100%; 
-  border-radius: 12px; /* Match the wrapper's rounded corners */
+.poster-wrapper:hover::before {
+  opacity: 0.6;
 }
 
-/* This is the "glow" layer */
-.poster-wrapper::before {
-  content: "";
-  position: absolute;
-  z-index: 1; /* Sits BEHIND the image */
-
-  /* Make it slightly bigger than the image */
-  top: -5%;
-  left: -5%;
-  width: 110%;
-  height: 110%;
-  
-  /* This variable is set by our JavaScript */
-  background-image: var(--poster-bg); 
-  
-  background-size: cover;
-  background-position: center;
-  
-  /* This is the "blur" you wanted! */
-  filter: blur(25px) brightness(1.2); /* Increased blur and brightness */
-  /* This makes the glow a bit more subtle */
-  opacity: 1; /* Made fully opaque */
+/* Add a container for the blur effect */
+.blur-container {
+  transition: filter 0.3s ease;
 }
+
+/* Blur everything except the hovered element */
+.poster-wrapper:hover ~ * {
+  filter: blur(8px);
+}
+
+.poster-wrapper:hover ~ .blur-container,
+.poster-wrapper:hover ~ section {
+  filter: blur(8px);
+}
+
+/* Keep the poster sharp while blurring surroundings */
+.poster-wrapper:hover img {
+  filter: none;
+}
+
 /* Enhanced sticky header with liquid glass effect */
 .site-header {
   position: sticky;
@@ -228,4 +236,9 @@ margin:0;
 /* Accessibility: respect reduced motion */
 @media (prefers-reduced-motion: reduce){
   *{transition:none!important;animation:none!important}
+}
+
+/* Main container isolation */
+main {
+  isolation: isolate; /* Create stacking context */
 }
