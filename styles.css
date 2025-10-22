@@ -25,12 +25,23 @@ body{
 
 .container{max-width:var(--container);margin:0 auto;padding:28px}
 
-.site-header{
-  position:sticky;
-  top:18px;
-  z-index:60;
-  padding:10px 0;
-  transition: transform 320ms cubic-bezier(.2,.9,.3,1), background 240ms;
+/* Enhanced sticky header with liquid glass effect */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 10px 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Liquid glass header */
