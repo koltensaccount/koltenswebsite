@@ -3,196 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kolten's Website</title>
-    
+    <title>Kolten's Homework</title>
     <style>
-        /* This CSS styles your whole site, including the animation and text */
+        /* Modern Academic Style (Seamless) */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #111; /* Dark background for the animation */
-            color: #fff;
-            overflow: hidden; /* Hide scrollbars as canvas fills screen */
+            background-color: #ffffff;
+            color: #1d1d1f;
         }
 
-        /* The canvas sits in the background, fixed to the viewport */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Puts it behind everything else */
+        main {
+            max-width: 800px; /* A good width for academic work */
+            margin: 0 auto;
+            padding: 50px 20px;
         }
 
-        /* --- Navigation Bar (Slightly transparent) --- */
-        nav {
-            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0 40px;
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 15px;
         }
 
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        nav ul li { position: relative; }
-        nav ul li a { display: block; padding: 20px; color: #ffffff; text-decoration: none; font-weight: 500; }
-        nav ul li a:hover { background-color: rgba(255, 255, 255, 0.1); }
-        nav ul ul { display: none; position: absolute; background-color: #222; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); min-width: 200px; }
-        nav ul li:hover > ul { display: block; }
-        nav ul ul li { width: 100%; }
+        details {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        summary {
+            font-size: 1.4em;
+            font-weight: 500;
+            padding: 20px 10px;
+            cursor: pointer;
+            list-style: none;
+        }
         
-        /* --- Main Centered Content --- */
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: calc(100vh - 61px); /* Full height minus nav bar */
-            padding: 20px;
+        summary:hover {
+            background-color: #f9f9f9;
         }
 
-        .hero-content h1 {
-            font-size: 4em;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -2px;
-            /* A cool gradient effect on the text */
-            background: linear-gradient(45deg, #f3ec78, #af4261);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .homework-content {
+            padding: 0px 10px 25px 10px;
         }
 
-        .hero-content p {
-            font-size: 1.5em;
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 600px;
-            margin-top: 20px;
+        /* This styles the embedded PDF "window" */
+        .pdf-embed {
+            width: 100%;
+            height: 800px; /* You can change this height! */
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
         }
     </style>
 </head>
 <body>
-    <!-- The canvas element for our JavaScript animation -->
-    <canvas id="particle-canvas"></canvas>
 
-    <!-- Navigation bar (same structure as before) -->
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li>
-                <a href="#">MATH 2243</a>
-                <ul>
-                    <li><a href="hw6.html">Homework 6</a></li>
-                    <li><a href="hw5.html">Homework 5</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+    <main>
+        <h1>MATH 2243 Homework</h1>
 
-    <!-- The main content that sits on top of the animation -->
-    <div class="hero-content">
-        <h1>Welcome.</h1>
-        <p>This is my personal website, a space to learn and experiment with web development.</p>
-    </div>
+        <details>
+            <summary>Homework 5</summary>
+            <div class="homework-content">
+                <p>Showing <b>hw5.pdf</b> embedded below:</p>
+                
+                <iframe 
+                    src="hw5.pdf" 
+                    class="pdf-embed"
+                    title="Homework 5 PDF Viewer">
+                </iframe>
+            </div>
+        </details>
 
-    <!-- The 'super fancy' JavaScript for the animation! -->
-    <script>
-        // Get the canvas element and its 2D drawing context
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
+        <details>
+            <summary>Homework 4</summary>
+            <div class="homework-content">
+                <p>
+                    (You would upload a file named <b>hw4.pdf</b> for this one.)
+                </p>
+            </div>
+        </Ddetails>
 
-        // Set canvas to fill the entire window
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // --- Particle Settings ---
-        let particlesArray = [];
-        const numberOfParticles = 100; // How many particles on screen
-        const maxDistance = 100;      // How close particles need to be to connect
-
-        // --- Particle Class ---
-        // This is a blueprint for creating each individual particle
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 2 - 1; // Can move left or right
-                this.speedY = Math.random() * 2 - 1; // Can move up or down
-            }
-            // Method to update particle's position
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // Bounce off edges of the screen
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            // Method to draw the particle on the canvas
-            draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        // --- Create Particles ---
-        // This function creates all the particles and puts them in our array
-        function init() {
-            particlesArray = [];
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        // --- Connect Particles ---
-        // This function checks the distance between particles and draws lines
-        function connect() {
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    const dx = particlesArray[a].x - particlesArray[b].x;
-                    const dy = particlesArray[a].y - particlesArray[b].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < maxDistance) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxDistance})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        // --- Animation Loop ---
-        // This is the engine that runs every frame
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear screen
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update(); // Update position
-                particlesArray[i].draw();   // Draw particle
-            }
-            connect(); // Draw the lines between them
-            requestAnimationFrame(animate); // Tell the browser to do it again
-        }
-
-        // --- Event Listener ---
-        // Make the canvas responsive if the user resizes their window
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            init(); // Re-create particles for the new size
-        });
-
-        // --- Start the animation! ---
-        init();
-        animate();
-    </script>
+    </main>
 
 </body>
 </html>
