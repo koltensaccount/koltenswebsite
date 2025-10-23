@@ -32,6 +32,22 @@
         <h1 class="title">Engineering in Motion</h1>
         <p class="subtitle">Clean, thoughtful visuals for circuits, systems and projects — designed with focus and restraint.</p>
       </div>
+.notebook-diagram {
+    /* Subtle 3D lift off the page */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    /* Conforms to the notebook's angle */
+    transform: perspective(800px) rotateX(1deg) rotateZ(-0.5deg);
+    /* A little padding for visual space */
+    padding: 10px;
+}
+
+.notebook-diagram svg path,
+.notebook-diagram svg line {
+    /* Messy line color */
+    stroke: #311E0C;
+    /* Sketchy filter can be applied here */
+    filter: url(#sketchy-filter);
+}
 
       <div class="hero-visuals">
         <!-- existing SVG / visual elements go here (keep them lightweight) -->
