@@ -10,6 +10,24 @@
   --card-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
 }
 
+.notebook-diagram {
+    /* Subtle 3D lift off the page */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    /* Conforms to the notebook's angle */
+    transform: perspective(800px) rotateX(1deg) rotateZ(-0.5deg);
+    /* A little padding for visual space */
+    padding: 10px;
+}
+
+.notebook-diagram svg path,
+.notebook-diagram svg line {
+    /* Messy line color */
+    stroke: #311E0C;
+    /* Sketchy filter can be applied here */
+    filter: url(#sketchy-filter);
+}
+
+
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
