@@ -9,12 +9,13 @@
 <body>
   <header class="site-header glass" role="banner">
     <div class="container header-row">
-      <a class="logo" href="#">kolten<span class="logo-sub"> • ece</span></a>
+      <a class="logo" href="index.html">kolten<span class="logo-sub"> • ece</span></a>
 
       <nav class="nav" role="navigation" aria-label="Primary">
         <a href="#learn">Learn</a>
         <a href="#projects">Projects</a>
-        <a href="#about">About</a>
+        <a href="#notebooks">Notebooks</a>
+        <a href="#interests">Interests</a>
       </nav>
 
       <div class="header-actions">
@@ -72,54 +73,118 @@
     <section class="container" id="interests" aria-label="personal interests">
       <div class="blur-container">
         <h2 class="section-title">What I'm Watching</h2>
-        <div class="poster-grid">
-            <div class="poster-wrapper">
-                <img src="https://image.tmdb.org/t/p/original/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg" alt="Poster for Dune: Part Two">
-            </div>
-        </div>
-
-        <h2 class="section-title">Class Notebooks</h2>
-        <div class="blur-container">
-          <div class="poster-grid" style="margin-left: 40px;">
-              <div class="poster-wrapper notebook">
-                  <a href="math2243/">
-                    <div class="notebook-cover">
-                        <h3>MATH 2243</h3>
-                        <p>Linear Algebra</p>
-                    </div>
-                  </a>
-              </div>
-              <div class="poster-wrapper notebook">
-                  <a href="ee2015/">
-                    <div class="notebook-cover">
-                        <h3>EE 2015</h3>
-                        <p>Circuits</p>
-                    </div>
-                  </a>
-              </div>
-              <div class="poster-wrapper notebook">
-                  <a href="chem1072/">
-                    <div class="notebook-cover">
-                        <h3>CHEM 1072</h3>
-                        <p>Chemistry</p>
-                    </div>
-                  </a>
-              </div>
+        <div class="poster-grid poster-grid--stacked">
+          <div class="poster-wrapper">
+            <img src="https://image.tmdb.org/t/p/original/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg" alt="Poster for Dune: Part Two">
           </div>
         </div>
 
+        <h2 class="section-title" id="notebooks">Class Notebooks</h2>
+        <div class="notebook-grid">
+          <a class="notebook-card notebook-card--math" href="math2243/">
+            <div class="notebook-cover">
+              <svg class="notebook-cover-art" viewBox="0 0 320 440" role="presentation" aria-hidden="true">
+                <defs>
+                  <linearGradient id="mathGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="#6fb8ff" stop-opacity="0.7"/>
+                    <stop offset="100%" stop-color="#a855f7" stop-opacity="0.35"/>
+                  </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="320" height="440" fill="url(#mathGradient)" opacity="0.25"/>
+                <g fill="none" stroke="#9fb0c8" stroke-opacity="0.35" stroke-width="2">
+                  <path d="M40 80h90v80H40z"/>
+                  <path d="M180 60c30 0 54 24 54 54s-24 54-54 54-54-24-54-54 24-54 54-54z"/>
+                  <path d="M220 260c-36 0-40 44-76 44-24 0-34-24-58-24"/>
+                  <path d="M70 310h180"/>
+                </g>
+                <g fill="#eaf3ff" fill-opacity="0.6" font-family="monospace" font-size="26">
+                  <text x="54" y="120">A x = b</text>
+                  <text x="186" y="110">det(A)</text>
+                  <text x="92" y="205">∥v∥₂ = 1</text>
+                  <text x="44" y="270">λ</text>
+                  <text x="108" y="272">v</text>
+                  <text x="148" y="272">=</text>
+                  <text x="176" y="272">0</text>
+                </g>
+              </svg>
+              <div class="notebook-cover-content">
+                <h3>MATH 2243</h3>
+                <p>Linear Algebra</p>
+              </div>
+            </div>
+          </a>
+          <a class="notebook-card notebook-card--circuits" href="ee2015/">
+            <div class="notebook-cover">
+              <svg class="notebook-cover-art" viewBox="0 0 320 440" role="presentation" aria-hidden="true">
+                <defs>
+                  <linearGradient id="circuitGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="#34d399" stop-opacity="0.55"/>
+                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.35"/>
+                  </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="320" height="440" fill="url(#circuitGradient)" opacity="0.25"/>
+                <g stroke="#b8ffe1" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round" fill="none">
+                  <path d="M40 120h40l20 -28 20 56 20 -56 20 28h40"/>
+                  <path d="M90 210h60l30 -32 30 32h40"/>
+                  <path d="M60 300c22 -30 58 -30 80 0s58 30 80 0"/>
+                </g>
+                <g fill="none" stroke="#eaf3ff" stroke-opacity="0.35" stroke-width="2">
+                  <path d="M60 170h200"/>
+                  <rect x="70" y="232" width="60" height="30" rx="6"/>
+                  <path d="M180 246h40l18 24"/>
+                </g>
+                <g fill="#eaf3ff" fill-opacity="0.65" font-family="monospace" font-size="24">
+                  <text x="64" y="90">v(t) = Vₘ sin(ωt)</text>
+                  <text x="70" y="355">τ = L / R</text>
+                </g>
+              </svg>
+              <div class="notebook-cover-content">
+                <h3>EE 2015</h3>
+                <p>Circuits</p>
+              </div>
+            </div>
+          </a>
+          <a class="notebook-card notebook-card--chem" href="chem1072/">
+            <div class="notebook-cover">
+              <svg class="notebook-cover-art" viewBox="0 0 320 440" role="presentation" aria-hidden="true">
+                <defs>
+                  <linearGradient id="chemGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fca5a5" stop-opacity="0.55"/>
+                    <stop offset="100%" stop-color="#f472b6" stop-opacity="0.35"/>
+                  </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="320" height="440" fill="url(#chemGradient)" opacity="0.25"/>
+                <g fill="none" stroke="#ffd7ef" stroke-opacity="0.45" stroke-width="3">
+                  <polygon points="100,80 150,50 200,80 200,140 150,170 100,140"/>
+                  <line x1="150" y1="170" x2="150" y2="220"/>
+                  <circle cx="150" cy="230" r="10"/>
+                  <path d="M60 250c20 0 30 20 20 34s-34 14-44 0 4-34 24-34z"/>
+                  <path d="M210 260c24 0 42 18 42 40s-18 40-40 40"/>
+                </g>
+                <g fill="#fff5f5" fill-opacity="0.65" font-family="monospace" font-size="24">
+                  <text x="76" y="120">C₆H₆</text>
+                  <text x="206" y="320">ΔG = ΔH - TΔS</text>
+                  <text x="74" y="360">K = [products]/[reactants]</text>
+                </g>
+              </svg>
+              <div class="notebook-cover-content">
+                <h3>CHEM 1072</h3>
+                <p>Chemistry</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
         <h2 class="section-title">Favorite Movies</h2>
-        <div class="blur-container">
-          <div class="poster-grid" style="margin-left: 40px;"><!-- Added margin to offset the negative margin of first poster -->
-              <div class="poster-wrapper">
-                  <img src="https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg" alt="The Dark Knight">
-              </div>
-              <div class="poster-wrapper">
-                  <img src="https://image.tmdb.org/t/p/w500/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg" alt="The Truman Show">
-              </div>
-              <div class="poster-wrapper">
-                  <img src="https://image.tmdb.org/t/p/w500/8kSerJrhrJWKLk1LViesGcnrUPE.jpg" alt="Interstellar">
-              </div>
+        <div class="poster-grid poster-grid--gallery">
+          <div class="poster-wrapper">
+            <img src="https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg" alt="The Dark Knight">
+          </div>
+          <div class="poster-wrapper">
+            <img src="https://image.tmdb.org/t/p/w500/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg" alt="The Truman Show">
+          </div>
+          <div class="poster-wrapper">
+            <img src="https://image.tmdb.org/t/p/w500/8kSerJrhrJWKLk1LViesGcnrUPE.jpg" alt="Interstellar">
           </div>
         </div>
       </div>
