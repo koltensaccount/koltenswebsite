@@ -1,9 +1,12 @@
 // Lightweight interaction helpers for the updated header + reduced-motion handling
 
 (function () {
-  const body = document.body;
   const header = document.querySelector('.site-header');
   const menuToggle = document.querySelector('.menu-toggle');
+
+  if (!header) {
+    return;
+  }
 
   // Mobile menu toggle
   if (menuToggle) {
@@ -17,7 +20,6 @@
   // Add a tiny transform to header on scroll for depth, but avoid if prefers-reduced-motion
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
-    let lastY = window.scrollY;
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
       // subtle lift as you scroll down
@@ -26,7 +28,6 @@
       } else {
         header.style.transform = '';
       }
-      lastY = y;
     }, { passive: true });
   }
 
@@ -40,36 +41,85 @@
   });
 })();
 
-// === ADD THIS TO script.js ===
-
-/*
-* NOTE: If you already have a "DOMContentLoaded" event listener
-* in your script.js, just copy the code from INSIDE this function
-* and put it inside your existing one.
-*/
-document.addEventListener("DOMContentLoaded", function() {
-
-  // --- Start of code to add --- //
-
-  // Find all poster wrappers on the page
+document.addEventListener('DOMContentLoaded', () => {
   const posterWrappers = document.querySelectorAll('.poster-wrapper');
-
-  // Loop through each one
-  posterWrappers.forEach(wrapper => {
-    // 1. Find the image inside this specific wrapper
+  posterWrappers.forEach((wrapper) => {
     const img = wrapper.querySelector('img');
-    
-    // 2. Get its image source URL
-    // We use .src to get the full, resolved URL
-    const imgSrc = img.src; 
-
-    // 3. Set the CSS variable (--poster-bg) on the wrapper
-    //    The '::before' element will automatically pick this up!
-    wrapper.style.setProperty('--poster-bg', `url(${imgSrc})`);
+    if (!img || !img.src) return;
+    wrapper.style.setProperty('--poster-bg', `url(${img.src})`);
   });
 
-  // --- End of code to add --- //
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const heroArt = document.querySelectorAll('.notebook-hero-art svg');
+  const coverArt = document.querySelectorAll('.notebook-cover-art');
 
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  const applyParallax = () => {
+    const viewportMid = window.innerHeight * 0.5;
+
+    heroArt.forEach((svg) => {
+      const parent = svg.closest('.notebook-hero');
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const sectionMid = rect.top + rect.height * 0.5;
+      const raw = (viewportMid - sectionMid) * 0.12;
+      const shift = clamp(raw, -60, 60);
+      svg.style.setProperty('--hero-shift', `${shift}px`);
+    });
+
+    coverArt.forEach((svg) => {
+      const rect = svg.getBoundingClientRect();
+      const mid = rect.top + rect.height * 0.5;
+      const raw = (viewportMid - mid) * 0.08;
+      const shift = clamp(raw, -36, 36);
+      svg.style.setProperty('--cover-shift', `${shift}px`);
+    });
+  };
+
+  if (heroArt.length || coverArt.length) {
+    let ticking = false;
+    let parallaxActive = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          applyParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    const startParallax = () => {
+      if (parallaxActive || prefersReduced.matches) return;
+      parallaxActive = true;
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', applyParallax);
+      applyParallax();
+    };
+
+    const stopParallax = () => {
+      if (!parallaxActive) return;
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', applyParallax);
+      heroArt.forEach((svg) => svg.style.removeProperty('--hero-shift'));
+      coverArt.forEach((svg) => svg.style.removeProperty('--cover-shift'));
+      parallaxActive = false;
+    };
+
+    startParallax();
+
+    if (typeof prefersReduced.addEventListener === 'function') {
+      prefersReduced.addEventListener('change', (event) => {
+        if (event.matches) {
+          stopParallax();
+        } else {
+          startParallax();
+        }
+      });
+    }
+  }
 });
 
 // Circuit scrolling animation logic

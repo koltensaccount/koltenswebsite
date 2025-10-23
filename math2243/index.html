@@ -31,6 +31,10 @@
       <div class="notebook-hero-art" aria-hidden="true">
         <svg viewBox="0 0 1440 600">
           <defs>
+            <linearGradient id="mathBackdrop" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#143066" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#020612" stop-opacity="0.05"/>
+            </linearGradient>
             <linearGradient id="mathHeroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#6fb8ff" stop-opacity="0.8"/>
               <stop offset="100%" stop-color="#a855f7" stop-opacity="0.35"/>
@@ -40,6 +44,7 @@
               <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.4"/>
             </linearGradient>
           </defs>
+          <rect x="0" y="0" width="1440" height="600" fill="url(#mathBackdrop)" opacity="0.8"/>
           <g fill="none" stroke="url(#mathHeroGradient)" stroke-opacity="0.35" stroke-width="3">
             <path d="M180 90h160l40 36 40-72 40 120 40-84 40 45h160"/>
             <path d="M260 180c80-60 180-60 260 0s180 60 260 0"/>
